@@ -17,3 +17,13 @@ a {
 .panel {
     height: 350px;
 }
+
+.non-styled {
+    text-decoration: none;
+    color: white;
+}
+
+.non-styled:hover {
+    text-decoration: none;
+    color: white;
+}

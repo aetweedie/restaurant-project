@@ -14,4 +14,12 @@ router.get('/new', function(req, res, next) {
     res.render('new', {title: 'New Restaurant'});
 });
 
+router.get('/edit', function(req, res, next) {
+    res.render('edit', {restaurant: {name: 'McDonalds'}});
+});
+
+router.get('/show', function(req, res, next) {
+    res.render('show', {title: 'gTables!'});
+});
+
 module.exports = router;
