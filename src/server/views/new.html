@@ -4,7 +4,22 @@
 
 
 {% block content %}
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
 
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+        <div class="middle"><h1 class="heading">{{ title }}</h1></div>
+    </div>
+  </div>
+</nav>
   <div class="container">
     <form class="form-horizontal">
       <fieldset>
@@ -12,13 +27,13 @@
         <div class="form-group">
           <label for="restaurantName" class="col-lg-2 control-label">Name</label>
           <div class="col-lg-3">
-            <input type="text" class="form-control" id="restaurantName" placeholder="Restaurant Name" required>
+            <input type="text" class="form-control" id="restaurantName" placeholder="Restaurant Name" pattern=".{1,40}" required>
           </div>
         </div>
         <div class="form-group">
           <label for="location" class="col-lg-2 control-label">Location</label>
           <div class="col-lg-3">
-            <input type="text" class="form-control" id="location" placeholder="City" required>
+            <input type="text" class="form-control" id="location" placeholder="City" pattern=".{1,40}" required>
           </div>
         </div>
         <div class="form-group">
@@ -132,7 +147,7 @@
         <div class="form-group">
           <label for="imageUrl" class="col-lg-2 control-label">Image Url</label>
           <div class="col-lg-3">
-            <input type="text" class="form-control" id="imageUrl" placeholder="Image Url" required>
+            <input type="url" class="form-control" id="imageUrl" placeholder="Image Url" pattern="https?://.+" required>
           </div>
         </div>
         <div class="form-group">
