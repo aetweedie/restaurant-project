@@ -10,6 +10,13 @@ a {
     text-align: center;
 }
 
+.right-side {
+    position: absolute;
+    right: 20px;
+    top: 40px;
+    font-size: 1.2em;
+}
+
 .middle {
     margin: 0 auto;
 }
@@ -33,7 +40,7 @@ a {
 }
 
 .panel {
-    background-size: 300px, 300px;
+    background-size: 250px, 250px;
     background-repeat: no-repeat;
     background-color: #FFFFFD;
     background-position: center;
@@ -48,8 +55,7 @@ a {
     bottom: 15px;
 }
 
-/*.right-align {
-    position: relative;
-    left: 10%;
-    bottom: 15px;
-}*/
+.wide {
+    width: 320px;
+    padding-bottom: 5px;
+}

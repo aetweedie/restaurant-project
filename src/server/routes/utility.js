@@ -6,7 +6,8 @@ var restaurants = {
         cuisine: 'American',
         location: 'Littleton',
         state: 'CO',
-        rating: [1,2,3,4,5]
+        rating: [1,2,3,4,5],
+        desc: 'This extravagant restaurant caters the finest American cuisine for a fraction of the price of anywhere else!'
     },
     {   name: 'Pizza Hut',
         image: 'italian.png',

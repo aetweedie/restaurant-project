@@ -17,7 +17,7 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
         <div class="middle"><h1 class="heading">{{ title }}</h1></div>
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right right-side">
         <li><a href="/new">New Restaurant</a></li>
       </ul>
     </div>
@@ -35,7 +35,7 @@
               <div class="bottom">
                 <div class="block-inline">
                   <h4 class="dark">{{ restaurant.cuisine }} Cuisine</h4>
-                  <h4 class="dark">{{ restaurant.location }}, {{ restaurant.state }} &nbsp;&nbsp;<span class="pull-right">{% for number in restaurant.rating %} <img class="rating" src="../images/full.svg.png" height="40px" width="40px"> {% endfor %}</span></h4>
+                  <h4 class="dark wide">{{ restaurant.location }}, {{ restaurant.state }} &nbsp;&nbsp;<span class="pull-right">{% for number in restaurant.rating %} <img class="rating" src="../images/full.svg.png" height="40px" width="40px"> {% endfor %}</span></h4>
                 </div>
               </div>
             </div>
