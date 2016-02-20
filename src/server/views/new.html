@@ -12,19 +12,20 @@
         <div class="form-group">
           <label for="restaurantName" class="col-lg-2 control-label">Name</label>
           <div class="col-lg-3">
-            <input type="text" class="form-control" id="restaurantName" placeholder="Restaurant Name">
+            <input type="text" class="form-control" id="restaurantName" placeholder="Restaurant Name" required>
           </div>
         </div>
         <div class="form-group">
           <label for="location" class="col-lg-2 control-label">Location</label>
           <div class="col-lg-3">
-            <input type="text" class="form-control" id="location" placeholder="City">
+            <input type="text" class="form-control" id="location" placeholder="City" required>
           </div>
         </div>
         <div class="form-group">
             <label for="state" class="col-lg-2 control-label">State</label>
-            <div class="col-lg-1">
-                <select class="form-control" id="state" name="state">
+            <div class="col-lg-2">
+                <select class="form-control" id="state" name="state" required>
+                    <option value="" disabled selected>-- State --</option>
                     <option value="AK">AK</option>
                     <option value="AL">AL</option>
                     <option value="AR">AR</option>
@@ -83,17 +84,17 @@
         <div class="form-group">
             <label for="cuisine" class="col-lg-2 control-label">Cuisine</label>
             <div class="col-lg-2">
-                <select class="form-control" id="cuisine" name="cuisine">
+                <select class="form-control" id="cuisine" name="cuisine" required>
+                    <option value="" disabled selected>-- Cuisine --</option>
                     <option value="American">American</option>
-                    <option value="Cajun">Cajun</option>
-                    <option value="Chinese">Chinese</option>
-                    <option value="Indian">Indian</option>
                     <option value="Italian">Italian</option>
                     <option value="Mexican">Mexican</option>
+                    <option value="Thai">Thai</option>
+                    <option value="Vietnamese">Vietnamese</option>
                 </select>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" required>
           <label class="col-lg-2 control-label">Rating</label>
           <div class="col-lg-3">
             <div class="radio-inline">
@@ -131,17 +132,17 @@
         <div class="form-group">
           <label for="imageUrl" class="col-lg-2 control-label">Image Url</label>
           <div class="col-lg-3">
-            <input type="text" class="form-control" id="imageUrl" placeholder="Image Url">
+            <input type="text" class="form-control" id="imageUrl" placeholder="Image Url" required>
           </div>
         </div>
         <div class="form-group">
           <div class="col-lg-3 col-lg-offset-2">
-            <textarea class="form-control" rows="3" id="textArea" placeholder="Short bio"></textarea>
+            <textarea class="form-control" rows="3" id="textArea" placeholder="Short bio" required></textarea>
           </div>
         </div>
         <div class="form-group">
           <div class="col-lg-4 col-lg-offset-8">
-            <button type="reset" class="btn btn-default">Cancel</button>
+            <a href="/" class="btn btn-default">Cancel</a>
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </div>
