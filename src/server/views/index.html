@@ -4,12 +4,18 @@
 
 
 {% block content %}
-
-  <div class="container">
-
-    <h1>{{ title }}</h1>
-    <p>Welcome to {{ title }}</p>
-
-  </div>
-
+<div class="container">
+    {% for restaurant in restaurants %}
+    <div class="col-lg-4">
+        <div class="panel panel-danger" style="background-image: url('../images/{{ restaurant.image }}');">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{ restaurant.name }}</h3>
+          </div>
+          <div class="panel-body">
+            Panel content
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
