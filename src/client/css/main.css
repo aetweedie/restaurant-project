@@ -27,3 +27,29 @@ a {
     text-decoration: none;
     color: white;
 }
+
+.rating {
+    margin: -10px;
+}
+
+.panel {
+    background-size: 300px, 300px;
+    background-repeat: no-repeat;
+    background-color: #FFFFFD;
+    background-position: center;
+}
+
+.dark {
+    color: #222222;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 15px;
+}
+
+/*.right-align {
+    position: relative;
+    left: 10%;
+    bottom: 15px;
+}*/

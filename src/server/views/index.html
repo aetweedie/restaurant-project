@@ -26,14 +26,21 @@
 <div class="container">
     {% for restaurant in restaurants %}
     <div class="col-lg-4">
-        <div class="panel panel-danger" style="background-image: url('../images/{{ restaurant.image }}');">
-          <div class="panel-heading">
-            <a href="/show" class="non-styled"><h3 class="panel-title">{{ restaurant.name }}</h3></a>
+        <a href="/show" class="non-styled">
+          <div class="panel panel-danger" style="background-image: url('../images/{{ restaurant.image }}'); ">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{ restaurant.name }}</h3>
+            </div>
+            <div class="panel-body">
+              <div class="bottom">
+                <div class="block-inline">
+                  <h4 class="dark">{{ restaurant.cuisine }} Cuisine</h4>
+                  <h4 class="dark">{{ restaurant.location }}, {{ restaurant.state }} &nbsp;&nbsp;<span class="pull-right">{% for number in restaurant.rating %} <img class="rating" src="../images/full.svg.png" height="40px" width="40px"> {% endfor %}</span></h4>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="panel-body">
-
-          </div>
-        </div>
+        </a>
     </div>
     {% endfor %}
 </div>
