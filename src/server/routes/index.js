@@ -6,16 +6,20 @@ router.get('/', function(req, res, next) {
   res.render('index', restaurant.restaurants);
 });
 
-router.get('/new', function(req, res, next) {
+router.get('/restaurants/new', function(req, res, next) {
     res.render('new', {title: 'New Restaurant'});
 });
 
-router.get('/edit', function(req, res, next) {
+router.get('/restaurants/:id/edit', function(req, res, next) {
     res.render('edit', {restaurant: restaurant.restaurants.restaurants[0]});
 });
 
-router.get('/show', function(req, res, next) {
+router.get('/restaurants/:id', function(req, res, next) {
     res.render('show', {restaurant: restaurant.restaurants.restaurants[0]});
+});
+
+router.get('/restaurants', function(req, res, next) {
+    res.redirect('/');
 });
 
 module.exports = router;

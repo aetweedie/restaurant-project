@@ -18,7 +18,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
         <div class="middle"><h1 class="heading">{{ title }}</h1></div>
       <ul class="nav navbar-nav navbar-right right-side">
-        <li><a href="/new">New Restaurant</a></li>
+        <li><a href="/restaurants/new">New Restaurant</a></li>
       </ul>
     </div>
   </div>
@@ -26,7 +26,7 @@
 <div class="container">
     {% for restaurant in restaurants %}
     <div class="col-lg-4">
-        <a href="/show" class="non-styled">
+        <a href="/restaurants/:id" class="non-styled">
           <div class="panel panel-danger" style="background-image: url('../images/{{ restaurant.image }}'); ">
             <div class="panel-heading">
               <h3 class="panel-title">{{ restaurant.name }}</h3>
