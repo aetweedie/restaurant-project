@@ -6,12 +6,12 @@ router.get('/', function(req, res, next) {
     restaurants: [ {name: 'McDonalds', image: 'burger.png'}, {name: 'Pizza Hut',
     image: 'italian.png'}, {name: 'Taco Bell', image: 'mexican.png'}, {name: 'Pho99',
     image: 'pho.jpg'}, {name: 'Thai Kitchen', image: 'thai.jpg'}, {name: 'Maggianos',
-    image: 'italian.png'}]
+    image: 'italian.png'}], title: 'gTables'
    });
 });
 
 router.get('/new', function(req, res, next) {
-    res.render('new');
+    res.render('new', {title: 'New Restaurant'});
 });
 
 module.exports = router;

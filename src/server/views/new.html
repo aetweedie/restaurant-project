@@ -6,25 +6,96 @@
 {% block content %}
 
   <div class="container">
-    <h1>New Restaurant</h1>
     <form class="form-horizontal">
       <fieldset>
         <legend>Create Restaurant</legend>
         <div class="form-group">
           <label for="restaurantName" class="col-lg-2 control-label">Name</label>
-          <div class="col-lg-10">
+          <div class="col-lg-3">
             <input type="text" class="form-control" id="restaurantName" placeholder="Restaurant Name">
           </div>
         </div>
         <div class="form-group">
           <label for="location" class="col-lg-2 control-label">Location</label>
-          <div class="col-lg-10">
+          <div class="col-lg-3">
             <input type="text" class="form-control" id="location" placeholder="City">
           </div>
         </div>
         <div class="form-group">
+            <label for="state" class="col-lg-2 control-label">State</label>
+            <div class="col-lg-1">
+                <select class="form-control" id="state" name="state">
+                    <option value="AK">AK</option>
+                    <option value="AL">AL</option>
+                    <option value="AR">AR</option>
+                    <option value="AZ">AZ</option>
+                    <option value="CA">CA</option>
+                    <option value="CO">CO</option>
+                    <option value="CT">CT</option>
+                    <option value="DC">D.C.</option>
+                    <option value="DE">DE</option>
+                    <option value="FL">FL</option>
+                    <option value="GA">GA</option>
+                    <option value="HI">HI</option>
+                    <option value="IA">IA</option>
+                    <option value="ID">ID</option>
+                    <option value="IL">IL</option>
+                    <option value="IN">IN</option>
+                    <option value="KS">KS</option>
+                    <option value="KY">KY</option>
+                    <option value="LA">LA</option>
+                    <option value="MA">MA</option>
+                    <option value="MD">MD</option>
+                    <option value="ME">ME</option>
+                    <option value="MI">MI</option>
+                    <option value="MN">MN</option>
+                    <option value="MO">MO</option>
+                    <option value="MS">MS</option>
+                    <option value="MT">MT</option>
+                    <option value="NC">NC</option>
+                    <option value="ND">ND</option>
+                    <option value="NE">NE</option>
+                    <option value="NH">NH</option>
+                    <option value="NJ">NJ</option>
+                    <option value="NM">NM</option>
+                    <option value="NV">NV</option>
+                    <option value="NY">NY</option>
+                    <option value="OH">OH</option>
+                    <option value="OK">OK</option>
+                    <option value="OR">OR</option>
+                    <option value="PA">PA</option>
+                    <option value="PR">PR</option>
+                    <option value="RI">RI</option>
+                    <option value="SC">SC</option>
+                    <option value="SD">SD</option>
+                    <option value="TN">TN</option>
+                    <option value="TX">TX</option>
+                    <option value="UT">UT</option>
+                    <option value="VA">VA</option>
+                    <option value="VT">VT</option>
+                    <option value="WA">WA</option>
+                    <option value="WI">WI</option>
+                    <option value="WV">WV</option>
+                    <option value="WY">WY</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="cuisine" class="col-lg-2 control-label">Cuisine</label>
+            <div class="col-lg-2">
+                <select class="form-control" id="cuisine" name="cuisine">
+                    <option value="American">American</option>
+                    <option value="Cajun">Cajun</option>
+                    <option value="Chinese">Chinese</option>
+                    <option value="Indian">Indian</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Mexican">Mexican</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
           <label class="col-lg-2 control-label">Rating</label>
-          <div class="col-lg-10">
+          <div class="col-lg-3">
             <div class="radio-inline">
               <label>
                 <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
@@ -58,13 +129,18 @@
           </div>
         </div>
         <div class="form-group">
-          <div class="col-lg-10">
-            <textarea class="form-control" rows="3" id="textArea" placeholder="Short bio"></textarea>
-            <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+          <label for="imageUrl" class="col-lg-2 control-label">Image Url</label>
+          <div class="col-lg-3">
+            <input type="text" class="form-control" id="imageUrl" placeholder="Image Url">
           </div>
         </div>
         <div class="form-group">
-          <div class="col-lg-10 col-lg-offset-2">
+          <div class="col-lg-3 col-lg-offset-2">
+            <textarea class="form-control" rows="3" id="textArea" placeholder="Short bio"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-lg-4 col-lg-offset-8">
             <button type="reset" class="btn btn-default">Cancel</button>
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
