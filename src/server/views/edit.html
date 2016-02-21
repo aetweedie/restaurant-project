@@ -103,8 +103,11 @@
             <label for="cuisine" class="col-lg-2 control-label">Cuisine</label>
             <div class="col-lg-2">
                 <select class="form-control" id="cuisine" name="cuisine" required>
+                {% if restaurant.cuisine %}
+                        <option value="{{ restaurant.cuisine }}" selected>{{ restaurant.cuisine }}</option>
+                    {% endif %}
                     <option value="" disabled>-- Cuisine --</option>
-                    <option value="American" selected>American</option>
+                    <option value="American">American</option>
                     <option value="Italian">Italian</option>
                     <option value="Mexican">Mexican</option>
                     <option value="Thai">Thai</option>
