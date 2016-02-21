@@ -29,7 +29,7 @@ var restaurants = {
         desc: 'I moved to Colorado in 2009 from California and have been on the search for great Mexican food. I think I finally found it! I ordered the carne asada taco and chorizo with eggs plate. The carne asada taco was generously filled with steak and topped off with pico de gallo and Guacamole (could have done without the guacamole). Excellent! The chorizo with eggs plate was amazing. Big portions and great flavor. The flour tortilla they give with the plate is huge and tastes homemade. Finally found a place that makes their rice and beans taste like my favorite California Mexican food joints.  Highly recommend.'
     },
     {   id: 4,
-        name: 'Pho99',
+        name: 'Phò99',
         image: 'pho.jpg',
         cuisine: 'Vietnamese',
         location: 'Denver',
