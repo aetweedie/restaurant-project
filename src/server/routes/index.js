@@ -11,11 +11,13 @@ router.get('/restaurants/new', function(req, res, next) {
 });
 
 router.get('/restaurants/:id/edit', function(req, res, next) {
-    res.render('edit', {restaurant: restaurant.restaurants.restaurants[0]});
+    var id = req.params.id;
+    res.render('edit', {restaurant: restaurant.restaurants.restaurants[id - 1]});
 });
 
 router.get('/restaurants/:id', function(req, res, next) {
-    res.render('show', {restaurant: restaurant.restaurants.restaurants[0]});
+    var id = req.params.id;
+    res.render('show', {restaurant: restaurant.restaurants.restaurants[id - 1]});
 });
 
 router.get('/restaurants', function(req, res, next) {
