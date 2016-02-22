@@ -1,6 +1,6 @@
-var express = require('express');
-var restaurant = require('../routes/utility');
-var router = express.Router();
+var express     = require('express');
+var restaurant  = require('../routes/utility');
+var router      = express.Router();
 
 router.get('/', function(req, res, next) {
   res.render('index', restaurant.restaurants);
