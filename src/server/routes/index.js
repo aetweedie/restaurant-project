@@ -5,9 +5,18 @@ var request     = require('request');
 
 router.get('/', function(req, res, next) {
 
+    var options = { method: 'GET',
+        url: 'http://localhost:5000/api/restaurants'
+    }
+
+    request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+
+      console.log(body);
+      res.render('index', {restaurants: JSON.parse(body), title: 'gTables'});
+    });
 
 
-  res.render('index', restaurant.restaurants);
 });
 
 router.get('/restaurants/new', function(req, res, next) {

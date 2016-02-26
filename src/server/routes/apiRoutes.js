@@ -26,7 +26,7 @@ router.get('/restaurants', function(req, res, next) {
         query.on('end', function() {
             done();
             if (newArr.length > 0) {
-                res.render('index', {restaurants: newArr});
+                res.json(newArr);
             } else {
                 res.json({status: 'Error', message: 'Restaurants Empty.'})
             }
@@ -43,7 +43,7 @@ router.post('/restaurants/new', function(req, res, next) {
             done();
         };
 
-        var query = client.query("INSERT INTO restaurants (name, address_city, address_state, cuisine_id, rating, image_url, description) VALUES ('"+newRestaurant.name+"', '"+newRestaurant.address_city+"', '"+newRestaurant.address_state+"', '(SELECT id FROM cuisines WHERE name = '"+newRestaurant.cuisine+"')', "+newRestaurant.rating+", '"+newRestaurant.image_url+"', '"+newRestaurant.description+"')");
+        var query = client.query("INSERT INTO restaurants (name, address_city, address_state, cuisine, rating, image_url, description) VALUES ('"+newRestaurant.name+"', '"+newRestaurant.address_city+"', '"+newRestaurant.address_state+"', '"+newRestaurant.cuisine+"', "+newRestaurant.rating+", '"+newRestaurant.image_url+"', '"+newRestaurant.description+"')");
 
         query.on('end', function() {
             done();

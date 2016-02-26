@@ -14,16 +14,20 @@ CREATE TABLE restaurants (
     name VARCHAR(255) NOT NULL,
     address_city VARCHAR(255) NOT NULL,
     address_state VARCHAR(5) NOT NULL,
-    cuisine_id INT,
+    cuisine VARCHAR(255) NOT NULL,
     rating INT CHECK(rating BETWEEN 1 AND 5) NOT NULL,
     image_url VARCHAR(255) NOT NULL,
     description TEXT
 );
 
-
-CREATE TABLE cuisines (
+CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    reviewer VARCHAR(255) NOT NULL,
+    review_date DATE NOT NULL,
+    rating INT NOT NULL,
+    review TEXT NOT NULL,
+    restaurant_id INT NOT NULL
 );
 
-ALTER TABLE restaurants ADD FOREIGN KEY (cuisine_id) REFERENCES cuisines(id);
+
+ALTER TABLE reviews ADD FOREIGN KEY (restaurant_id) REFERENCES restaurants(id);
