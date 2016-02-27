@@ -21,8 +21,12 @@ a {
     margin: 0 auto;
 }
 
-.panel {
+.panelHome {
     height: 350px;
+    background-size: 250px, 250px;
+    background-repeat: no-repeat;
+    background-color: #FFFFFD;
+    background-position: center;
 }
 
 .non-styled {
@@ -39,12 +43,6 @@ a {
     margin: -10px;
 }
 
-.panel {
-    background-size: 250px, 250px;
-    background-repeat: no-repeat;
-    background-color: #FFFFFD;
-    background-position: center;
-}
 
 .dark {
     color: #222222;
@@ -58,4 +56,17 @@ a {
 .wide {
     width: 320px;
     padding-bottom: 5px;
+}
+
+.right {
+    text-align: right;
+    position: relative;
+    left: 120%;
+}
+
+.reviewBody {
+        width: inherit;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 }

@@ -21,19 +21,19 @@
   </div>
 </nav>
   <div class="container">
-    <form class="form-horizontal">
+    <form class="form-horizontal" method="POST" action="/restaurants/new">
       <fieldset>
         <legend>Create Restaurant</legend>
         <div class="form-group">
           <label for="restaurantName" class="col-lg-2 control-label">Name</label>
           <div class="col-lg-3">
-            <input type="text" class="form-control" id="restaurantName" placeholder="Restaurant Name" pattern=".{1,40}" required>
+            <input type="text" class="form-control" id="restaurantName" name="name" placeholder="Restaurant Name" pattern=".{1,40}" required>
           </div>
         </div>
         <div class="form-group">
           <label for="location" class="col-lg-2 control-label">Location</label>
           <div class="col-lg-3">
-            <input type="text" class="form-control" id="location" placeholder="City" pattern=".{1,40}" required>
+            <input type="text" class="form-control" id="location" name="location" placeholder="City" pattern=".{1,40}" required>
           </div>
         </div>
         <div class="form-group">
@@ -112,7 +112,7 @@
         <div class="form-group" required>
           <label class="col-lg-2 control-label">Rating</label>
           <div class="col-lg-3">
-            <input type="range" min="1" max="5" step="1" id="fader" list="faderSettings">
+            <input type="range" min="1" max="5" step="1" id="fader" name="rating" list="faderSettings">
             <datalist id="faderSettings">
               <option>1</option>
               <option>2</option>
@@ -125,12 +125,12 @@
         <div class="form-group">
           <label for="imageUrl" class="col-lg-2 control-label">Image Url</label>
           <div class="col-lg-3">
-            <input type="url" class="form-control" id="imageUrl" placeholder="Image Url" pattern="https?://.+" required>
+            <input type="text" class="form-control" id="imageUrl" name="image_url" placeholder="Image Url" required>
           </div>
         </div>
         <div class="form-group">
           <div class="col-lg-3 col-lg-offset-2">
-            <textarea class="form-control" rows="3" id="textArea" placeholder="Short bio" required></textarea>
+            <textarea class="form-control" rows="3" id="textArea" name="description" placeholder="Short bio" required></textarea>
           </div>
         </div>
         <div class="form-group">
@@ -146,6 +146,6 @@
 {% endblock %}
 
 
-<!-- refactor to use the same form with new and edit, add {% if %} logic to see if there is an ID in the url.
+<!-- refactor to use the same form with new and edit, add  if logic to see if there is an ID in the url.
 if so, then add the information and make the heading edit + restaurant name.  Else, show the blank form with
 the new restaurant heading. -->

@@ -24,25 +24,41 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-4">
-            <img src="../images/{{ restaurant.image }}" alt="{{ restaurant.image }}" height="400px" width="400px">
+            <img src="../images/{{ restaurant.image_url }}" alt="{{ restaurant.image_url }}" height="400px" width="400px">
         </div>
         <div class="col-lg-5 col-lg-offset-2">
             <h4>{{ restaurant.cuisine }} cuisine</h4>
-            <h4>Located in {{ restaurant.location }}, {{ restaurant.state }}</h4>
+            <h4>Located in {{ restaurant.address_city }}, {{ restaurant.address_state }}</h4>
             <br>
-            <p>{{ restaurant.desc }}</p>
+            <p>{{ restaurant.description }}</p>
             <br>
-            <p>Rating: {% for number in restaurant.rating %} <img class="rating" src="../images/full.svg.png"> {% endfor %}</p>
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-4 col-lg-offset-6">
+            {% set ratingArray = Array(restaurant.rating) %}
+            <p>Rating: {% for number in ratingArray %} <img class="rating" src="../images/full.svg.png"> {% endfor %}</p>
             <a href="/restaurants/{{ restaurant.id }}/edit" class="btn btn-primary">Edit</a>
-            <a href="/restaurants/{{ restaurant.id }}" data-method="delete" class="btn btn-danger">Delete</a>
+            <a href="/restaurants/{{ restaurant.id }}/delete" class="btn btn-danger">Delete</a>
+            <a href="/restaurants/{{ restaurant.id }}/addReview" class="btn btn-info">Add Review</a>
+        </div>
+        <div class="container">
+            {% for review in reviews %}
+            <div class="col-lg-6 col-lg-offset-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">{{ review.reviewer }} <span class="pull-right">{{ review.review_date | date('m-d-Y') }}</span></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="block-inline">
+                                <span class="reviewBody">{{ review.review }}</span>
+                          <h4 class="dark wide">{% set ratingArray = Array(restaurant.rating) %}{% for number in ratingArray %} <img class="rating" src="../images/full.svg.png" height="30px" width="30px"> {% endfor %}
+                          <a href="/review/{{ review.id }}/edit" class="btn btn-warning right">Edit</a>
+                          </h4>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 </div>
+
 
 {% endblock %}

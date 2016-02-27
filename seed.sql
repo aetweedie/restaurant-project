@@ -8,3 +8,7 @@ VALUES ('McDonalds', 'Littleton', 'CO', 'American', 5, 'burger.png', 'This extra
 ('Phò99', 'Denver', 'CO', 'Vietnamese', 2, 'pho.jpg', 'The broth is so soothing. The herbs are awesome great for what ails you. The number 7 is the best. I put everything in. It''s so good with the basil and sprouts, the jalepeno is the best fresh spice heat is perfect. Enough for 2 meals with large #7.'),
 ('Thai Kitchen', 'Portland', 'OR', 'Thai', 4, 'thai.jpg', 'Very good chicken pad Thai. I ordered hot and the spice level was perfect! Hot with a kick but not overwhelming. The rest of the flavor profile was great as well. Having spent a considerable amount of time in Thailand I am somewhat of a expert on Pad Thai. It was quite good. Had a brief conversation with the owner and he was quite pleasant.'),
 ('Maggianos', 'Centennial', 'CO', 'Italian', 5, 'italian.png', 'My girlfriend and I regularly go here for special occasions since it is where we had our first date and it has never failed to impress me. Awesome staff, food is ready quickly and is always wonderful in taste and appearance! I recommend the Marco''s Meal for Two for date nights- its a killer deal for a ton of food for a great price. Note: You WILL be stuffed afterwards!');
+
+
+INSERT INTO reviews (reviewer, review_date, rating, review, restaurant_id) VALUES
+('Mike Dee', '2015-02-26', 4.2, 'I absolutely love the chicken here!  It''s fantasic!', 1);
