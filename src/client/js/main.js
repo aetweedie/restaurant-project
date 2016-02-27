@@ -1,5 +1,9 @@
 // add scripts
 
 $(document).on('ready', function() {
-  console.log('sanity check!');
+  $('.wrapper').dotdotdot({
+    ellipsis: '...',
+    wrap: 'word',
+    height: null
+  });
 });

@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends '../layout.html' %}
 
 {% block title %}{% endblock %}
 
@@ -36,7 +36,7 @@
             <p>Rating: {% for number in ratingArray %} <img class="rating" src="../images/full.svg.png"> {% endfor %}</p>
             <a href="/restaurants/{{ restaurant.id }}/edit" class="btn btn-primary">Edit</a>
             <a href="/restaurants/{{ restaurant.id }}/delete" class="btn btn-danger">Delete</a>
-            <a href="/restaurants/{{ restaurant.id }}/addReview" class="btn btn-info">Add Review</a>
+            <a href="/restaurants/{{ restaurant.id }}/reviews/new" class="btn btn-info">Add Review</a>
         </div>
         <div class="container">
             {% for review in reviews %}
@@ -47,9 +47,9 @@
                     </div>
                     <div class="panel-body">
                         <div class="block-inline">
-                                <span class="reviewBody">{{ review.review }}</span>
-                          <h4 class="dark wide">{% set ratingArray = Array(restaurant.rating) %}{% for number in ratingArray %} <img class="rating" src="../images/full.svg.png" height="30px" width="30px"> {% endfor %}
-                          <a href="/review/{{ review.id }}/edit" class="btn btn-warning right">Edit</a>
+                                <div class="wrapper"><span class="reviewBody">{{ review.review | truncate(35) }}</span></div>
+                          <h4 class="dark wide">{% set ratingArray = Array(review.rating) %}{% for number in ratingArray %} <img class="rating" src="../images/full.svg.png" height="30px" width="30px"> {% endfor %}
+                          <a href="/restaurants/{{ restaurant.id }}/reviews/{{ review.id }}/edit" class="btn btn-warning right">Edit</a>
                           </h4>
                         </div>
                     </div>

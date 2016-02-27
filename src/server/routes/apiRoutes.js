@@ -121,6 +121,67 @@ router.get('/reviews/:id?', function(req, res, next) {
     });
 });
 
+router.get('/restaurants/:id/reviews/new', function(req, res, next) {
+    var id = req.params.id;
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            res.status(500).json({message: 'Restaurant not found'});
+        }
+
+        var reviewArr = [];
+        var query = client.query('SELECT * FROM restaurants WHERE id = '+id);
+
+        query.on('row', function(row) {
+            reviewArr.push(row);
+        });
+
+        query.on('end', function() {
+            done();
+            res.json(reviewArr);
+            pg.end();
+        });
+    });
+});
+
+router.post('/restaurants/:id/reviews/new', function(req, res, next) {
+    var id = req.params.id;
+    var newReview = req.body;
+    pg.connect(connectionString, function(err, client, done) {
+        var reviewArr = [];
+        if (err) {
+            res.status(500).json({message: 'Reviews not found'});
+        }
+
+        var query = client.query("INSERT INTO reviews (reviewer, review_date, rating, review, restaurant_id) VALUES ('"+newReview.reviewer+"', '"+newReview.review_date+"', "+newReview.rating+",'"+newReview.review+"', "+id+")");
+
+        query.on('end', function() {
+            done();
+            res.json({message: 'Review successfully added.'});
+            pg.end();
+        });
+    });
+});
+
+router.put('/restaurants/:id/reviews/:review_id/edit', function(req, res, next) {
+    var editReview = req.body;
+    var id = req.params.id;
+    var review_id = req.params.review_id;
+
+    pg.connect(connectionString, function(err, client, done) {
+        if (err) {
+            res.status(500).json({status: 'Error', message: 'Couldn\'t retrieve restaurants'});
+            done();
+        };
+        var query = client.query("UPDATE reviews SET reviewer = '"+editReview.reviewer+"', review_date = '"+editReview.review_date+"', rating = "+Number(editReview.rating)+", review = '"+editReview.review+"', restaurant_id = "+id+" WHERE id = "+review_id);
+
+        query.on('end', function() {
+            done();
+            res.json({message: 'Review Updated successfully!'});
+            pg.end();
+        });
+    });
+});
+
 
 
 module.exports = router;

@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends '../layout.html' %}
 
 {% block title %}{% endblock %}
 
@@ -16,34 +16,31 @@
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-        <div class="middle"><h1 class="heading">Edit {{ restaurant.name }}</h1></div>
+        <div class="middle"><h1 class="heading">{{ title }}</h1></div>
     </div>
   </div>
 </nav>
   <div class="container">
-    <form class="form-horizontal" method="POST" action="/restaurants/{{ restaurant.id }}/editRes">
+    <form class="form-horizontal" method="POST" action="/restaurants/new">
       <fieldset>
-        <legend>Edit Restaurant</legend>
+        <legend>Create Restaurant</legend>
         <div class="form-group">
           <label for="restaurantName" class="col-lg-2 control-label">Name</label>
           <div class="col-lg-3">
-            <input type="text" class="form-control" id="restaurantName" placeholder="Restaurant Name" name="name" pattern=".{1,40}" value="{{ restaurant.name }}" required>
+            <input type="text" class="form-control" id="restaurantName" name="name" placeholder="Restaurant Name" pattern=".{1,40}" required>
           </div>
         </div>
         <div class="form-group">
           <label for="location" class="col-lg-2 control-label">Location</label>
           <div class="col-lg-3">
-            <input type="text" class="form-control" id="location" placeholder="City" name="location" pattern=".{1,40}" value="{{ restaurant.address_city }}" required>
+            <input type="text" class="form-control" id="location" name="location" placeholder="City" pattern=".{1,40}" required>
           </div>
         </div>
         <div class="form-group">
             <label for="state" class="col-lg-2 control-label">State</label>
             <div class="col-lg-2">
                 <select class="form-control" id="state" name="state" required>
-                    {% if restaurant.address_state %}
-                        <option value="{{ restaurant.address_state }}" selected>{{ restaurant.address_state }}</option>
-                    {% endif %}
-                    <option value="" disabled>-- State --</option>
+                    <option value="" disabled selected>-- State --</option>
                     <option value="AK">AK</option>
                     <option value="AL">AL</option>
                     <option value="AR">AR</option>
@@ -103,10 +100,7 @@
             <label for="cuisine" class="col-lg-2 control-label">Cuisine</label>
             <div class="col-lg-2">
                 <select class="form-control" id="cuisine" name="cuisine" required>
-                {% if restaurant.cuisine %}
-                        <option value="{{ restaurant.cuisine }}" selected>{{ restaurant.cuisine }}</option>
-                    {% endif %}
-                    <option value="" disabled>-- Cuisine --</option>
+                    <option value="" disabled selected>-- Cuisine --</option>
                     <option value="American">American</option>
                     <option value="Italian">Italian</option>
                     <option value="Mexican">Mexican</option>
@@ -118,7 +112,7 @@
         <div class="form-group" required>
           <label class="col-lg-2 control-label">Rating</label>
           <div class="col-lg-3">
-            <input type="range" min="1" max="5" step="1" value="{{ restaurant.rating }}" name="rating" id="rating" list="faderSettings">
+            <input type="range" min="1" max="5" step="1" id="fader" name="rating" list="faderSettings">
             <datalist id="faderSettings">
               <option>1</option>
               <option>2</option>
@@ -131,17 +125,17 @@
         <div class="form-group">
           <label for="imageUrl" class="col-lg-2 control-label">Image Url</label>
           <div class="col-lg-3">
-            <input type="text" class="form-control" id="imageUrl" placeholder="Image Url" name="image_url" value="{{ restaurant.image_url }}" required>
+            <input type="text" class="form-control" id="imageUrl" name="image_url" placeholder="Image Url" required>
           </div>
         </div>
         <div class="form-group">
           <div class="col-lg-3 col-lg-offset-2">
-            <textarea class="form-control" rows="3" id="textArea" placeholder="Short bio" name="description" required>{{ restaurant.description }}</textarea>
+            <textarea class="form-control" rows="3" id="textArea" name="description" placeholder="Short bio" required></textarea>
           </div>
         </div>
         <div class="form-group">
           <div class="col-lg-4 col-lg-offset-8">
-            <a href="/restaurants/{{ restaurant.id }}" class="btn btn-default">Cancel</a>
+            <a href="/" class="btn btn-default">Cancel</a>
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </div>
@@ -150,3 +144,8 @@
   </div>
 
 {% endblock %}
+
+
+<!-- refactor to use the same form with new and edit, add  if logic to see if there is an ID in the url.
+if so, then add the information and make the heading edit + restaurant name.  Else, show the blank form with
+the new restaurant heading. -->

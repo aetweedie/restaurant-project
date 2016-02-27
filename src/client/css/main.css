@@ -65,8 +65,7 @@ a {
 }
 
 .reviewBody {
-        width: inherit;
+        width: 100px;
         overflow: hidden;
         text-overflow: ellipsis;
-        white-space: nowrap;
 }

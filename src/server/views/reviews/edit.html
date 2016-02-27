@@ -1,0 +1,69 @@
+{% extends '../layout.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+        <div class="middle"><h1 class="heading">Edit Review for {{ restaurant.name }}</h1></div>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <form class="form-horizontal" method="POST" action="/reviews/{{ restaurant.id }}/reviews/{{ review.id }}/edit">
+    <fieldset>
+      <legend>New Review</legend>
+      <div class="form-group">
+        <label for="reviewer" class="col-lg-2 control-label">Name</label>
+        <div class="col-lg-3">
+          <input type="text" class="form-control" id="reviewer" name="reviewer" placeholder="Name" required minlength="3" maxlength="20" value="{{ review.reviewer }}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="review_date" class="col-lg-2 control-label">Date</label>
+        <div class="col-lg-3">
+          <input type="date" class="form-control" id="review_date" name="review_date" value="{{ review.review_date }}" required>
+        </div>
+      </div>
+      <div class="form-group" required>
+          <label class="col-lg-2 control-label">Rating</label>
+          <div class="col-lg-3">
+            <input type="range" min="1" max="5" step="1" name="rating" id="rating" list="faderSettings" value="{{ review.rating }}" required>
+            <datalist id="faderSettings">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </datalist>
+          </div>
+        </div>
+      <div class="form-group">
+        <label for="review" class="col-lg-2 control-label">Review</label>
+        <div class="col-lg-3">
+          <textarea class="form-control" rows="8" id="review" placeholder="Review your experience." required minlength="20">{{ review.review }}</textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-3 col-lg-offset-9">
+          <a href="/restaurants/{{ restaurant.id }}" class="btn btn-default">Cancel</a>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+
+{% endblock %}
+
