@@ -30,4 +30,4 @@ CREATE TABLE reviews (
 );
 
 
-ALTER TABLE reviews ADD FOREIGN KEY (restaurant_id) REFERENCES restaurants(id);
+ALTER TABLE reviews ADD CONSTRAINT reviews_restaurant_id_fkey FOREIGN KEY (restaurant_id) REFERENCES restaurants(id) ON DELETE CASCADE;

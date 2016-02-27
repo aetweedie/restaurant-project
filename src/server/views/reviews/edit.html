@@ -16,12 +16,12 @@
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-        <div class="middle"><h1 class="heading">Edit Review for {{ restaurant.name }}</h1></div>
+        <div class="middle"><h1 class="heading">Editing {{ review.reviewer }}'s Review for {{ restaurant.name }}</h1></div>
     </div>
   </div>
 </nav>
 <div class="container">
-  <form class="form-horizontal" method="POST" action="/reviews/{{ restaurant.id }}/reviews/{{ review.id }}/edit">
+  <form class="form-horizontal" method="POST" action="/restaurants/{{ restaurant.id }}/reviews/{{ review.id }}/edit">
     <fieldset>
       <legend>New Review</legend>
       <div class="form-group">
@@ -33,7 +33,7 @@
       <div class="form-group">
         <label for="review_date" class="col-lg-2 control-label">Date</label>
         <div class="col-lg-3">
-          <input type="date" class="form-control" id="review_date" name="review_date" value="{{ review.review_date }}" required>
+          <input type="date" class="form-control" id="review_date" name="review_date" value="{{ review_date }}" required>
         </div>
       </div>
       <div class="form-group" required>
@@ -52,7 +52,7 @@
       <div class="form-group">
         <label for="review" class="col-lg-2 control-label">Review</label>
         <div class="col-lg-3">
-          <textarea class="form-control" rows="8" id="review" placeholder="Review your experience." required minlength="20">{{ review.review }}</textarea>
+          <textarea class="form-control" rows="8" id="review" placeholder="Review your experience." name="review" required minlength="20">{{ review.review }}</textarea>
         </div>
       </div>
       <div class="form-group">

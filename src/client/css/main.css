@@ -58,14 +58,7 @@ a {
     padding-bottom: 5px;
 }
 
-.right {
-    text-align: right;
-    position: relative;
-    left: 120%;
-}
 
 .reviewBody {
         width: 100px;
-        overflow: hidden;
-        text-overflow: ellipsis;
 }

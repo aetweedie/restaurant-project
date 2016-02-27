@@ -104,7 +104,7 @@ router.get('/reviews/:id?', function(req, res, next) {
             res.status(500).json({message: 'Reviews not found'});
         }
         if (id) {
-            var query = client.query('SELECT * FROM reviews WHERE id = '+id);
+            var query = client.query('SELECT * FROM reviews WHERE restaurant_id = '+id);
         } else {
             var query = client.query('SELECT * FROM reviews');
         }
@@ -145,14 +145,15 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
 
 router.post('/restaurants/:id/reviews/new', function(req, res, next) {
     var id = req.params.id;
+    console.log(id);
     var newReview = req.body;
     pg.connect(connectionString, function(err, client, done) {
-        var reviewArr = [];
         if (err) {
             res.status(500).json({message: 'Reviews not found'});
         }
 
-        var query = client.query("INSERT INTO reviews (reviewer, review_date, rating, review, restaurant_id) VALUES ('"+newReview.reviewer+"', '"+newReview.review_date+"', "+newReview.rating+",'"+newReview.review+"', "+id+")");
+        console.log("INSERT INTO reviews (reviewer, review_date, rating, review, restaurant_id) VALUES ('"+newReview.reviewer+"', '"+newReview.review_date+"', "+newReview.rating+", '"+newReview.review+"', "+id+")");
+        var query = client.query("INSERT INTO reviews (reviewer, review_date, rating, review, restaurant_id) VALUES ('"+newReview.reviewer+"', '"+newReview.review_date+"', "+newReview.rating+", '"+newReview.review+"', "+id+")");
 
         query.on('end', function() {
             done();

@@ -47,9 +47,9 @@
                     </div>
                     <div class="panel-body">
                         <div class="block-inline">
-                                <div class="wrapper"><span class="reviewBody">{{ review.review | truncate(35) }}</span></div>
-                          <h4 class="dark wide">{% set ratingArray = Array(review.rating) %}{% for number in ratingArray %} <img class="rating" src="../images/full.svg.png" height="30px" width="30px"> {% endfor %}
-                          <a href="/restaurants/{{ restaurant.id }}/reviews/{{ review.id }}/edit" class="btn btn-warning right">Edit</a>
+                                <div class="wrapper"><span class="reviewBody">{{ review.review | truncate(80) }}</span></div>
+                          <h4 class="dark">{% set ratingArray = Array(review.rating) %}{% for number in ratingArray %} <img class="rating" src="../images/full.svg.png" height="30px" width="30px"> {% endfor %}
+                          <span class="pull-right"><a href="/restaurants/{{ restaurant.id }}/reviews/{{ review.id }}/edit" class="btn btn-warning">Edit</a></span>
                           </h4>
                         </div>
                     </div>

@@ -5,6 +5,8 @@ var request     = require('request');
 var truncate    = require('truncate');
 
 
+var replaceApostrophe = /'/g;
+
 /* Main Routes */
 
 // send a GET request to the restaurants route to populate the index page.
@@ -33,7 +35,6 @@ router.get('/restaurants/new', function(req, res, next) {
 // Query the API to post the data to the database //
 
 router.post('/restaurants/new', function(req, res, next) {
-    var replaceApostrophe = /'/g;
     req.body.description = String(req.body.description).replace(replaceApostrophe, "''");
     var options = { method: 'POST',
       url: 'http://localhost:5000/api/restaurants/new',
@@ -78,7 +79,6 @@ router.get('/restaurants/:id/edit', function(req, res, next) {
 
 router.post('/restaurants/:id/edit', function(req, res, next) {
     var id = req.params.id;
-    var replaceApostrophe = /'/g;
     req.body.description = String(req.body.description).replace(replaceApostrophe, "''");
 
     var options = { method: 'PUT',
@@ -115,7 +115,7 @@ router.get('/restaurants/:id', function(req, res, next) {
         if (error) throw new Error(error);
 
         var options = { method: 'GET',
-        url: 'http://localhost:5000/api/reviews'};
+        url: 'http://localhost:5000/api/reviews/'+id};
 
         // query GET request to API for reviews based on current restaurant ID.
         request(options, function (error, response, bod) {
@@ -186,7 +186,6 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
     request(options, function(error, response, body) {
         if (error) throw new Error(error);
 
-        console.log(body);
         // render the new review page with the restaurant information and the formatted Date string
         res.render('reviews/new', {restaurant: JSON.parse(body)[0], formattedDate});
     })
@@ -194,8 +193,9 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
 
 // send new review information to the database when submitting the new review form
 
-router.post('/reviews/:id/reviews/new', function(req, res, next) {
+router.post('/restaurants/:id/reviews/new', function(req, res, next) {
     var id = req.params.id;
+    req.body.review = String(req.body.review).replace(replaceApostrophe, "''");
     var options = { method: 'POST',
       url: 'http://localhost:5000/api/restaurants/'+id+'/reviews/new',
       body:
@@ -205,12 +205,13 @@ router.post('/reviews/:id/reviews/new', function(req, res, next) {
          review: req.body.review,
          restaurant_id: id},
       json: true };
+      console.log(req.body);
 
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
 
       // redirect to the restaurant show page after adding the initial review.
-      res.redirect('/restaurants/'+req.body.restaurant_id);
+      res.redirect('/restaurants/'+id);
     });
 })
 
@@ -222,9 +223,8 @@ router.post('/restaurants/:id/reviews/:review_id/edit', function(req, res, next)
     var id = req.params.id;
     var review_id = req.params.review_id;
     // replace any apostrophe's in the text area that break sql strings
-    var replaceApostrophe = /'/g;
+
     req.body.review = String(req.body.review).replace(replaceApostrophe, "''");
-    // console.log(req.body);
     var options = { method: 'PUT',
       url: 'http://localhost:5000/api/restaurants/'+id+'/reviews/'+review_id+'/edit',
       body:
@@ -261,8 +261,10 @@ router.get('/restaurants/:id/reviews/:review_id/edit', function(req, res, next) 
         request(options, function (error, response, bod) {
             if (error) throw new Error(error);
 
+            // format the review_date to take off time entries.
+            var review_date = JSON.parse(bod)[0].review_date.split('T')[0];
             // render the reviews edit page with the restaurant information and the review information.
-            res.render('reviews/edit', {restaurant: JSON.parse(body)[0], review: JSON.parse(bod)[0]})
+            res.render('reviews/edit', {restaurant: JSON.parse(body)[0], review: JSON.parse(bod)[0], review_date: review_date})
         });
 
     });
