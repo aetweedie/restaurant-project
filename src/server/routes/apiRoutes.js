@@ -121,6 +121,27 @@ router.get('/reviews/:id?', function(req, res, next) {
     });
 });
 
+router.get('/review/:review_id', function(req, res, next) {
+    var id = req.params.review_id;
+    pg.connect(connectionString, function(err, client, done) {
+        var reviewArr = [];
+        if (err) {
+            res.status(500).json({message: 'Reviews not found'});
+        }
+        var query = client.query('SELECT * FROM reviews WHERE id = '+id);
+
+        query.on('row', function(row) {
+            reviewArr.push(row);
+        });
+
+        query.on('end', function() {
+            done();
+            res.json(reviewArr);
+            pg.end();
+        });
+    });
+});
+
 router.get('/restaurants/:id/reviews/new', function(req, res, next) {
     var id = req.params.id;
     pg.connect(connectionString, function(err, client, done) {

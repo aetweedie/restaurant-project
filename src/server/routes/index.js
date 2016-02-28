@@ -120,9 +120,17 @@ router.get('/restaurants/:id', function(req, res, next) {
         // query GET request to API for reviews based on current restaurant ID.
         request(options, function (error, response, bod) {
             if (error) throw new Error(error);
-
+            var rating = JSON.parse(bod);
+            var totalRating = 0;
+            var numRatings = rating.length;
+            rating.forEach(function(restaurant) {
+                totalRating += restaurant.rating;
+                return totalRating;
+            });
+            averageRating = Math.round(totalRating/numRatings).toFixed(0);
+            console.log(averageRating);
             // render show page with review and restaurant information.
-            res.render('restaurants/show', {restaurant: JSON.parse(body)[0], reviews: JSON.parse(bod)})
+            res.render('restaurants/show', {restaurant: JSON.parse(body)[0], reviews: JSON.parse(bod), averageRating: averageRating});
         });
 
     });
@@ -256,12 +264,13 @@ router.get('/restaurants/:id/reviews/:review_id/edit', function(req, res, next) 
         if (error) throw new Error(error);
 
         var options = { method: 'GET',
-        url: 'http://localhost:5000/api/reviews/'+review_id};
+        url: 'http://localhost:5000/api/review/'+review_id};
 
         request(options, function (error, response, bod) {
             if (error) throw new Error(error);
 
             // format the review_date to take off time entries.
+            console.log(JSON.parse(bod));
             var review_date = JSON.parse(bod)[0].review_date.split('T')[0];
             // render the reviews edit page with the restaurant information and the review information.
             res.render('reviews/edit', {restaurant: JSON.parse(body)[0], review: JSON.parse(bod)[0], review_date: review_date})
@@ -269,6 +278,7 @@ router.get('/restaurants/:id/reviews/:review_id/edit', function(req, res, next) 
 
     });
 });
+
 
 
 
