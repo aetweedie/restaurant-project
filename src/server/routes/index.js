@@ -7,6 +7,22 @@ var truncate    = require('truncate');
 
 var replaceApostrophe = /'/g;
 
+function getRating (array) {
+    var rating = array;
+    var totalRating = 0;
+    var numRatings = rating.length;
+    if (rating !== []) {
+        rating.forEach(function(restaurant) {
+            totalRating += restaurant.rating;
+            return totalRating;
+        });
+        return averageRating = Math.round(totalRating/numRatings).toFixed(0);
+    } else {
+        return 0;
+    }
+};
+
+
 /* Main Routes */
 
 // send a GET request to the restaurants route to populate the index page.
@@ -43,7 +59,6 @@ router.post('/restaurants/new', function(req, res, next) {
          address_city: req.body.location,
          address_state: req.body.state,
          cuisine: req.body.cuisine,
-         rating: req.body.rating,
          image_url: req.body.image_url,
          description: req.body.description },
       json: true };
@@ -88,7 +103,6 @@ router.post('/restaurants/:id/edit', function(req, res, next) {
             address_city: req.body.location,
             address_state: req.body.state,
             cuisine: req.body.cuisine,
-            rating: req.body.rating,
             image_url: req.body.image_url,
             description: req.body.description },
             json: true };
@@ -120,17 +134,10 @@ router.get('/restaurants/:id', function(req, res, next) {
         // query GET request to API for reviews based on current restaurant ID.
         request(options, function (error, response, bod) {
             if (error) throw new Error(error);
-            var rating = JSON.parse(bod);
-            var totalRating = 0;
-            var numRatings = rating.length;
-            rating.forEach(function(restaurant) {
-                totalRating += restaurant.rating;
-                return totalRating;
-            });
-            averageRating = Math.round(totalRating/numRatings).toFixed(0);
-            console.log(averageRating);
+            var averageRating = getRating(JSON.parse(bod));
             // render show page with review and restaurant information.
-            res.render('restaurants/show', {restaurant: JSON.parse(body)[0], reviews: JSON.parse(bod), averageRating: averageRating});
+            res.render('restaurants/show', {restaurant: JSON.parse(body)[0], reviews: JSON.parse(bod), averageRating: JSON.parse(averageRating)});
+
         });
 
     });

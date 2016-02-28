@@ -35,7 +35,7 @@
               <div class="bottom">
                 <div class="block-inline">
                   <h4 class="dark">{{ restaurant.cuisine }} Cuisine</h4>
-                  <h4 class="dark wide">{{ restaurant.address_city }}, {{ restaurant.address_state }} &nbsp;&nbsp;<span class="pull-right">{% set ratingArray = Array(restaurant.rating) %}{% for number in ratingArray %} <img class="rating" src="../images/full.svg.png" height="30px" width="30px"> {% endfor %}</span></h4>
+                  <h4 class="dark wide">{{ restaurant.address_city }}, {{ restaurant.address_state }} &nbsp;&nbsp;<span class="pull-right">{% set ratingArray = Array(restaurant.rating) | default(0) %}{% for number in ratingArray | default(0) %} <img class="rating" src="../images/full.svg.png" height="30px" width="30px"> {% endfor %}</span></h4>
                 </div>
               </div>
             </div>

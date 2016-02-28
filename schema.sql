@@ -15,7 +15,6 @@ CREATE TABLE restaurants (
     address_city VARCHAR(255) NOT NULL,
     address_state VARCHAR(5) NOT NULL,
     cuisine VARCHAR(255) NOT NULL,
-    rating INT CHECK(rating BETWEEN 1 AND 5) NOT NULL,
     image_url VARCHAR(255) NOT NULL,
     description TEXT
 );

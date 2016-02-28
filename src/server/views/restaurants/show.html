@@ -32,7 +32,9 @@
             <br>
             <p>{{ restaurant.description }}</p>
             <br>
-            {% set ratingArray = Array(averageRating) %}
+            {% if averageRating %}
+                {% set ratingArray = Array(averageRating) %}
+            {% endif %}
             <p>Rating: {% for number in ratingArray %} <img class="rating" src="../images/full.svg.png"> {% endfor %}</p>
             <a href="/restaurants/{{ restaurant.id }}/edit" class="btn btn-primary">Edit</a>
             <a href="/restaurants/{{ restaurant.id }}/delete" class="btn btn-danger">Delete</a>

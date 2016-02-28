@@ -48,7 +48,7 @@ router.post('/restaurants/new', function(req, res, next) {
             done();
         };
 
-        var query = client.query("INSERT INTO restaurants (name, address_city, address_state, cuisine, rating, image_url, description) VALUES ('"+newRestaurant.name+"', '"+newRestaurant.address_city+"', '"+newRestaurant.address_state+"', '"+newRestaurant.cuisine+"', "+newRestaurant.rating+", '"+newRestaurant.image_url+"', '"+newRestaurant.description+"')");
+        var query = client.query("INSERT INTO restaurants (name, address_city, address_state, cuisine, image_url, description) VALUES ('"+newRestaurant.name+"', '"+newRestaurant.address_city+"', '"+newRestaurant.address_state+"', '"+newRestaurant.cuisine+"',  '"+newRestaurant.image_url+"', '"+newRestaurant.description+"')");
 
         query.on('end', function() {
             done();
@@ -67,7 +67,7 @@ router.put('/restaurants/:id/edit', function(req, res, next) {
             res.status(500).json({status: 'Error', message: 'Couldn\'t retrieve restaurants'});
             done();
         };
-        var query = client.query("UPDATE restaurants SET name = '"+editRestaurant.name+"', address_city = '"+editRestaurant.address_city+"', address_state = '"+editRestaurant.address_state+"', cuisine = '"+editRestaurant.cuisine+"', rating = "+Number(editRestaurant.rating)+", image_url = '"+editRestaurant.image_url+"', description = '"+editRestaurant.description+"' WHERE id = "+id);
+        var query = client.query("UPDATE restaurants SET name = '"+editRestaurant.name+"', address_city = '"+editRestaurant.address_city+"', address_state = '"+editRestaurant.address_state+"', cuisine = '"+editRestaurant.cuisine+"', image_url = '"+editRestaurant.image_url+"', description = '"+editRestaurant.description+"' WHERE id = "+id);
         query.on('end', function() {
             done();
             res.json({message: 'Restaurant Updated successfully!'});
@@ -108,7 +108,7 @@ router.get('/reviews/:id?', function(req, res, next) {
         } else {
             var query = client.query('SELECT * FROM reviews');
         }
-
+        console.log(query.text);
         query.on('row', function(row) {
             reviewArr.push(row);
         });
