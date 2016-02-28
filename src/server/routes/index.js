@@ -11,15 +11,15 @@ function getRating (array) {
     var rating = array;
     var totalRating = 0;
     var numRatings = rating.length;
-    if (rating !== []) {
-        rating.forEach(function(restaurant) {
-            totalRating += restaurant.rating;
-            return totalRating;
-        });
-        return averageRating = Math.round(totalRating/numRatings).toFixed(0);
-    } else {
-        return 0;
+    rating.forEach(function(restaurant) {
+        totalRating += restaurant.rating;
+        return totalRating;
+    });
+    averageRating = Math.round(totalRating/numRatings).toFixed(0);
+    if (isNaN(averageRating)) {
+        averageRating = 0;
     }
+    return averageRating;
 };
 
 
@@ -31,6 +31,7 @@ router.get('/', function(req, res, next) {
     var options = { method: 'GET',
         url: 'http://localhost:5000/api/restaurants'
     }
+
 
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
@@ -137,9 +138,7 @@ router.get('/restaurants/:id', function(req, res, next) {
             var averageRating = getRating(JSON.parse(bod));
             // render show page with review and restaurant information.
             res.render('restaurants/show', {restaurant: JSON.parse(body)[0], reviews: JSON.parse(bod), averageRating: JSON.parse(averageRating)});
-
         });
-
     });
 });
 
