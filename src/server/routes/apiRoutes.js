@@ -4,7 +4,7 @@ var router      = express.Router();
 var pg          = require('pg');
 
 
-var connectionString = 'postgres://localhost:5432/gtables';
+var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/gtables';
 
 
 router.get('/restaurants/:id?', function(req, res, next) {
