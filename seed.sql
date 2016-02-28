@@ -1,5 +1,5 @@
 
-\connect gtables;
+\connect d797pbs2oonkvi;
 
 INSERT INTO restaurants (name, address_city, address_state, cuisine, image_url, description)
 VALUES ('McDonalds', 'Littleton', 'CO', 'American', 'burger.png', 'This extravagant restaurant caters the finest American cuisine for a fraction of the price of anywhere else! Hot mocha coffee to start the day. And a sausage biscuit. Friendly people here even if they aren''t the fastest at 6 AM.'),

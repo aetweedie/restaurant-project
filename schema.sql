@@ -1,8 +1,5 @@
-DROP DATABASE IF EXISTS gtables;
-CREATE DATABASE gtables;
 
-
-\connect gtables;
+\connect d797pbs2oonkvi;
 
 
 DROP TABLE IF EXISTS restaurants;
