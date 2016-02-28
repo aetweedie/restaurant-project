@@ -49,7 +49,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="block-inline">
-                                <div class="wrapper"><span class="reviewBody truncate">{{ review.review }}</span></div>
+                                <div class="wrapper"><span class="reviewBody truncate non-styled">{{ review.review }}</span></div>
                           <h4 class="dark">{% set ratingArray = Array(review.rating) %}{% for number in ratingArray %} <img class="rating" src="../images/full.svg.png" height="30px" width="30px"> {% endfor %}
                           <span class="pull-right"><a href="/restaurants/{{ restaurant.id }}/reviews/{{ review.id }}/edit" class="btn btn-warning">Edit</a></span>
                           </h4>
