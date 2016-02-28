@@ -70,8 +70,7 @@ router.post('/restaurants/new', function(req, res, next) {
       // redirect back to the index page after creation
       res.redirect('/');
     });
-
-})
+});
 
 
 // Get data from API for specific restaurant id //
@@ -114,7 +113,7 @@ router.post('/restaurants/:id/edit', function(req, res, next) {
       // redirect to the show page for the specific edited restaurant after editing.
       res.redirect('/restaurants/' + id);
     });
-})
+});
 
 
 // query API for one restaurant and render the show page. //
@@ -227,7 +226,7 @@ router.post('/restaurants/:id/reviews/new', function(req, res, next) {
       // redirect to the restaurant show page after adding the initial review.
       res.redirect('/restaurants/'+id);
     });
-})
+});
 
 
 // send the edited information to the database for a specific restaurant ID and to
@@ -255,7 +254,7 @@ router.post('/restaurants/:id/reviews/:review_id/edit', function(req, res, next)
       // redirect to the show page after editing the review.
       res.redirect('/restaurants/' + id);
     });
-})
+});
 
 // get the restaurant information for a specific restaurant in order to
 // be able to pull the information in to populate the edit reviews page.
@@ -284,11 +283,6 @@ router.get('/restaurants/:id/reviews/:review_id/edit', function(req, res, next) 
 
     });
 });
-
-
-
-
-
 
 
 

@@ -38,9 +38,9 @@
                   <h4 class="dark wide">{{ restaurant.address_city }}, {{ restaurant.address_state }} &nbsp;&nbsp;
                     <span class="pull-right">
                       {% set rating = Array(restaurant.rating) %}
-                      {% for number in rating %}
-                          <img class="rating" src="../images/full.svg.png" height="30px" width="30px">
-                      {% endfor %}
+                        {% for number in rating %}
+                            <img class="rating" src="../images/full.svg.png" height="30px" width="30px">
+                        {% endfor %}
                     </span>
                   </h4>
                 </div>

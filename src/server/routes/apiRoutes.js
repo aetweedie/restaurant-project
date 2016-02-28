@@ -22,8 +22,7 @@ router.get('/restaurants/:id?', function(req, res, next) {
         if (id) {
             var query = client.query('SELECT * FROM restaurants WHERE id = '+id);
         } else {
-            var queryString = 'SELECT restaurants.name, image_url, address_city, address_state, CAST(ROUND(AVG(reviews.rating))AS INT) AS rating, description, restaurants.id, cuisine FROM restaurants LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id GROUP BY restaurants.name, image_url, address_city, address_state, description, restaurants.id';
-            var query = client.query(queryString);
+            var query = client.query('SELECT restaurants.name, image_url, address_city, address_state, COALESCE(CAST(ROUND(AVG(reviews.rating)) AS INT), 0) AS rating, description, restaurants.id, cuisine FROM restaurants LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id GROUP BY restaurants.name, image_url, address_city, address_state, description, restaurants.id');
         }
 
         query.on('row', function(row) {
