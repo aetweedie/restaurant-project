@@ -3,10 +3,10 @@ var restaurant  = require('./utility');
 var router      = express.Router();
 var pg          = require('pg');
 
-
+// connect to env.DATABASE_URL or localhost
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/gtables';
 
-
+// get one restaurant or all restaurants from database.
 router.get('/restaurants/:id?', function(req, res, next) {
     var id = req.params.id;
     pg.connect(connectionString, function(err, client, done) {
@@ -40,6 +40,7 @@ router.get('/restaurants/:id?', function(req, res, next) {
     });
 });
 
+// send a new restaurant into the database
 router.post('/restaurants/new', function(req, res, next) {
     var newRestaurant = req.body;
     pg.connect(connectionString, function(err, client, done) {
@@ -58,6 +59,8 @@ router.post('/restaurants/new', function(req, res, next) {
     });
 });
 
+
+// edit an existing restaurant, by ID.
 router.put('/restaurants/:id/edit', function(req, res, next) {
     var editRestaurant = req.body;
     console.log('form info:',editRestaurant);
@@ -76,7 +79,7 @@ router.put('/restaurants/:id/edit', function(req, res, next) {
     });
 });
 
-
+// delete a specific restaurant, by ID
 router.delete('/restaurants/:id/delete', function(req, res, next) {
     var id = req.params.id;
     pg.connect(connectionString, function(err, client, done) {
@@ -95,7 +98,7 @@ router.delete('/restaurants/:id/delete', function(req, res, next) {
     });
 });
 
-
+// get all reviews or one review, by restaurant ID with optional parameter.
 router.get('/reviews/:id?', function(req, res, next) {
     var id = req.params.id;
     pg.connect(connectionString, function(err, client, done) {
@@ -120,6 +123,7 @@ router.get('/reviews/:id?', function(req, res, next) {
     });
 });
 
+// get one review by review ID.
 router.get('/review/:review_id', function(req, res, next) {
     var id = req.params.review_id;
     pg.connect(connectionString, function(err, client, done) {
@@ -141,6 +145,7 @@ router.get('/review/:review_id', function(req, res, next) {
     });
 });
 
+// get a specific restaurant to make a new review for it
 router.get('/restaurants/:id/reviews/new', function(req, res, next) {
     var id = req.params.id;
     pg.connect(connectionString, function(err, client, done) {
@@ -163,6 +168,8 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
     });
 });
 
+
+// insert new review into database for specific restaurant, by ID
 router.post('/restaurants/:id/reviews/new', function(req, res, next) {
     var id = req.params.id;
     console.log(id);
@@ -183,6 +190,8 @@ router.post('/restaurants/:id/reviews/new', function(req, res, next) {
     });
 });
 
+
+// edit a review, by review ID, for a specific restaurant, by ID.
 router.put('/restaurants/:id/reviews/:review_id/edit', function(req, res, next) {
     var editReview = req.body;
     var id = req.params.id;
