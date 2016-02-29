@@ -5,6 +5,7 @@ var pg          = require('pg');
 
 // connect to env.DATABASE_URL or localhost
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/gtables';
+console.log(connectionString);
 
 // get one restaurant or all restaurants from database.
 router.get('/restaurants/:id?', function(req, res, next) {
