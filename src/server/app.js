@@ -6,8 +6,8 @@ var logger        = require('morgan');
 var cookieParser  = require('cookie-parser');
 var bodyParser    = require('body-parser');
 var swig          = require('swig');
-var flash = require('connect-flash');
-var session = require('express-session');
+var flash         = require('connect-flash');
+var session       = require('express-session');
 
 
 // *** routes *** //
