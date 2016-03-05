@@ -1,23 +1,21 @@
-var knex = require('../../../db/knex');
+var knex = require('../../db/knex');
 function Restaurants () {
   return knex('restaurants');
 }
 
 module.exports = {
   // Selects
-  getAllRestaurants: function() {
-    // returns all restaurants in the database
-    return Restaurants().select().then(function(data) {
+  getRestaurant: function(id) {
+    // returns one restaurant, specified by ID
+    return Restaurants().select().where('id', id).then(function(data) {
       return data;
     });
   },
-  getRestaurantAndRating: function(id) {
-    // returns one restaurant and the average rating, specified by ID
-    var coalesce = knex.raw('COALESCE(CAST(ROUND(AVG(reviews.rating)) AS INT), 0) AS rating');
-    return Restaurants().select('*', coalesce).where('id', id)
-      .rightJoin('reviews', 'restaurants.id', 'reviews.restaurant_id').then(function(data) {
-        console.log(data);
-        return data;
+  getRestaurantAndRating: function() {
+    // returns all restaurants and their average rating
+    return knex.raw('SELECT restaurants.name, image_url, address_city, address_state, COALESCE(CAST(ROUND(AVG(reviews.rating)) AS INT), 0) AS rating, description, restaurants.id, cuisine FROM restaurants LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id GROUP BY restaurants.name, image_url, address_city, address_state, description, restaurants.id')
+      .then(function(data) {
+        return data.rows;
       });
   },
   editRestaurantById: function(id, body) {
