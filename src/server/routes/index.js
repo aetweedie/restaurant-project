@@ -1,7 +1,7 @@
 var express     = require('express');
 var router      = express.Router();
 var request     = require('request');
-
+var helpers     = require('./utility');
 
 function getRating (array) {
     var rating = array;
@@ -112,7 +112,8 @@ router.post('/restaurants/:id/edit', function(req, res, next) {
 
 router.get('/restaurants/:id', function(req, res, next) {
     var id = req.params.id;
-    console.log(req.flash());
+    var flash = req.flash('message')[0];
+    console.log(req.flash('message')[0]);
     var options = { method: 'GET',
         url: 'http://localhost:5000/api/restaurants/'+id
     };
@@ -120,12 +121,13 @@ router.get('/restaurants/:id', function(req, res, next) {
     // query GET request to API for restaurant information
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
-
+        console.log(flash);
         var options = { method: 'GET',
         url: 'http://localhost:5000/api/reviews/'+id
       };
         // query GET request to API for reviews based on current restaurant ID.
         request(options, function (error, response, bod) {
+          console.log(flash);
             if (error) throw new Error(error);
               var averageRating = getRating(JSON.parse(bod));
             // render show page with review and restaurant information.
@@ -133,7 +135,7 @@ router.get('/restaurants/:id', function(req, res, next) {
                 restaurant: JSON.parse(body)[0],
                 reviews: JSON.parse(bod),
                 averageRating: JSON.parse(averageRating),
-                message: req.flash('message')
+                message: flash
               });
         });
     });
@@ -204,7 +206,7 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
 
 // send new review information to the database when submitting the new review form
 
-router.post('/restaurants/:id/reviews/new', function(req, res, next) {
+router.post('/restaurants/:id/reviews/new', helpers.validReviewer, function(req, res, next) {
     var id = req.params.id;
     var options = { method: 'POST',
       url: 'http://localhost:5000/api/restaurants/'+id+'/reviews/new',

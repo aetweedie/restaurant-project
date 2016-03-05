@@ -7,7 +7,7 @@ function validReviewer (req, res, next) {
   var reviewer = req.body.reviewer;
   rev_queries.getReviewsByResId(req.params.id).then(function(data) {
     return data.filter(function(review) {
-      return review.reviewer === reviewer;
+      return review.reviewer.toLowerCase() === reviewer.toLowerCase();
     });
   }).then(function(data) {
     console.log('data: ', data);
@@ -15,7 +15,7 @@ function validReviewer (req, res, next) {
       req.flash('message', {
         status: 'success', value: 'Thanks for your review.'
       });
-      return next();
+      next();
     } else {
       req.flash('message', {
         status: 'danger', value: 'Reviewer already exists.  Please try a different Restaurant.'
