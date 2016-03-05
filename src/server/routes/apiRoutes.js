@@ -23,8 +23,10 @@ router.get('/restaurants/:id?', function(req, res, next) {
             done();
         }
         if (id) {
+          // getAllRestaurants();
             var query = client.query('SELECT * FROM restaurants WHERE id = '+id);
         } else {
+          // getRestaurantAndRating();
             var query = client.query('SELECT restaurants.name, image_url, address_city, address_state, COALESCE(CAST(ROUND(AVG(reviews.rating)) AS INT), 0) AS rating, description, restaurants.id, cuisine FROM restaurants LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id GROUP BY restaurants.name, image_url, address_city, address_state, description, restaurants.id');
         }
 
@@ -52,6 +54,7 @@ router.post('/restaurants/new', function(req, res, next) {
             done();
         }
 
+        // insertRestaurant();
         var query = client.query("INSERT INTO restaurants (name, address_city, address_state, cuisine, image_url, description) VALUES ('"+newRestaurant.name+"', '"+newRestaurant.address_city+"', '"+newRestaurant.address_state+"', '"+newRestaurant.cuisine+"',  '"+newRestaurant.image_url+"', '"+newRestaurant.description+"')");
 
         query.on('end', function() {
@@ -66,13 +69,14 @@ router.post('/restaurants/new', function(req, res, next) {
 // edit an existing restaurant, by ID.
 router.put('/restaurants/:id/edit', function(req, res, next) {
     var editRestaurant = req.body;
-    console.log('form info:',editRestaurant);
+    console.log('form info:', editRestaurant);
     var id = req.params.id;
     pg.connect(connectionString, function(err, client, done) {
         if (err) {
             res.status(500).json({status: 'Error', message: 'Couldn\'t retrieve restaurants'});
             done();
         }
+        // editRestaurantById();
         var query = client.query("UPDATE restaurants SET name = '"+editRestaurant.name+"', address_city = '"+editRestaurant.address_city+"', address_state = '"+editRestaurant.address_state+"', cuisine = '"+editRestaurant.cuisine+"', image_url = '"+editRestaurant.image_url+"', description = '"+editRestaurant.description+"' WHERE id = "+id);
         query.on('end', function() {
             done();
@@ -91,6 +95,7 @@ router.delete('/restaurants/:id/delete', function(req, res, next) {
             done();
         }
 
+        // deleteRestaurantById();
         var query = client.query('DELETE FROM restaurants WHERE id = '+id);
 
         query.on('end', function() {
@@ -157,6 +162,7 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
         }
 
         var reviewArr = [];
+        // getAllRestaurants();
         var query = client.query('SELECT * FROM restaurants WHERE id = '+id);
 
         query.on('row', function(row) {
@@ -182,7 +188,6 @@ router.post('/restaurants/:id/reviews/new', function(req, res, next) {
             res.status(500).json({message: 'Reviews not found'});
         }
 
-        console.log("INSERT INTO reviews (reviewer, review_date, rating, review, restaurant_id) VALUES ('"+newReview.reviewer+"', '"+newReview.review_date+"', "+newReview.rating+", '"+newReview.review+"', "+id+")");
         var query = client.query("INSERT INTO reviews (reviewer, review_date, rating, review, restaurant_id) VALUES ('"+newReview.reviewer+"', '"+newReview.review_date+"', "+newReview.rating+", '"+newReview.review+"', "+id+")");
 
         query.on('end', function() {

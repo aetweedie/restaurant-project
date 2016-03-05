@@ -2,7 +2,7 @@ var express     = require('express');
 var restaurant  = require('./utility');
 var router      = express.Router();
 var request     = require('request');
-var truncate    = require('truncate');
+
 
 
 var replaceApostrophe = /'/g;
@@ -20,7 +20,7 @@ function getRating (array) {
         averageRating = 0;
     }
     return averageRating;
-};
+}
 
 
 /* Main Routes */
@@ -30,7 +30,7 @@ router.get('/', function(req, res, next) {
 
     var options = { method: 'GET',
         url: 'https://miked-gtables.herokuapp.com/api/restaurants'
-    }
+    };
 
 
     request(options, function (error, response, body) {
@@ -148,7 +148,7 @@ router.get('/restaurants/:id/delete', function(req, res, next) {
     var id = req.params.id;
     var options = { method: 'DELETE',
       url: 'https://miked-gtables.herokuapp.com/api/restaurants/'+id+'/delete'
-    }
+    };
 
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
@@ -182,7 +182,7 @@ function formatDate(date) {
     if (day.length < 2) day = '0' + day;
 
     return [year, month, day].join('-');
-};
+}
 
 
 // add new review for a specific restaurant by ID. //
@@ -201,7 +201,7 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
 
         // render the new review page with the restaurant information and the formatted Date string
         res.render('reviews/new', {restaurant: JSON.parse(body)[0], formattedDate});
-    })
+    });
 });
 
 // send new review information to the database when submitting the new review form
@@ -278,7 +278,7 @@ router.get('/restaurants/:id/reviews/:review_id/edit', function(req, res, next) 
             console.log(JSON.parse(bod));
             var review_date = JSON.parse(bod)[0].review_date.split('T')[0];
             // render the reviews edit page with the restaurant information and the review information.
-            res.render('reviews/edit', {restaurant: JSON.parse(body)[0], review: JSON.parse(bod)[0], review_date: review_date})
+            res.render('reviews/edit', {restaurant: JSON.parse(body)[0], review: JSON.parse(bod)[0], review_date: review_date});
         });
 
     });
