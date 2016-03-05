@@ -12,37 +12,47 @@ console.log(connectionString);
 // get one restaurant or all restaurants from database.
 router.get('/restaurants/:id?', function(req, res, next) {
     var id = req.params.id;
-    pg.connect(connectionString, function(err, client, done) {
-        var newArr = [];
-        if (err) {
-            res.status(500)
-                .json({
-                    status: 'Error',
-                    message: 'Something bad happened'
-                });
-            done();
-        }
-        if (id) {
-          // getAllRestaurants();
-            var query = client.query('SELECT * FROM restaurants WHERE id = '+id);
-        } else {
-          // getRestaurantAndRating();
-            var query = client.query('SELECT restaurants.name, image_url, address_city, address_state, COALESCE(CAST(ROUND(AVG(reviews.rating)) AS INT), 0) AS rating, description, restaurants.id, cuisine FROM restaurants LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id GROUP BY restaurants.name, image_url, address_city, address_state, description, restaurants.id');
-        }
+    if (id) {
+      res_queries.getRestaurant(id).then(function(data) {
+        res.json(data);
+      });
+    } else {
+      res_queries.getRestaurantAndRating().then(function(data) {
+        res.json(data);
+      });
+    }
 
-        query.on('row', function(row) {
-            newArr.push(row);
-        });
-        query.on('end', function() {
-            done();
-            if (newArr.length > 0) {
-                res.json(newArr);
-            } else {
-                res.status(500).json({status: 'Error', message: 'Restaurants Empty.'})
-            }
-            pg.end();
-        });
-    });
+    // pg.connect(connectionString, function(err, client, done) {
+    //     var newArr = [];
+    //     if (err) {
+    //         res.status(500)
+    //             .json({
+    //                 status: 'Error',
+    //                 message: 'Something bad happened'
+    //             });
+    //         done();
+    //     }
+    //     if (id) {
+    //       // getAllRestaurants();
+    //         var query = client.query('SELECT * FROM restaurants WHERE id = '+id);
+    //     } else {
+    //       // getRestaurantAndRating();
+    //         var query = client.query('SELECT restaurants.name, image_url, address_city, address_state, COALESCE(CAST(ROUND(AVG(reviews.rating)) AS INT), 0) AS rating, description, restaurants.id, cuisine FROM restaurants LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id GROUP BY restaurants.name, image_url, address_city, address_state, description, restaurants.id');
+    //     }
+    //
+    //     query.on('row', function(row) {
+    //         newArr.push(row);
+    //     });
+    //     query.on('end', function() {
+    //         done();
+    //         if (newArr.length > 0) {
+    //             res.json(newArr);
+    //         } else {
+    //             res.status(500).json({status: 'Error', message: 'Restaurants Empty.'})
+    //         }
+    //         pg.end();
+    //     });
+    // });
 });
 
 // send a new restaurant into the database
