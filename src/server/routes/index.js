@@ -1,11 +1,7 @@
 var express     = require('express');
-var restaurant  = require('./utility');
 var router      = express.Router();
 var request     = require('request');
-var truncate    = require('truncate');
 
-
-var replaceApostrophe = /'/g;
 
 function getRating (array) {
     var rating = array;
@@ -20,7 +16,7 @@ function getRating (array) {
         averageRating = 0;
     }
     return averageRating;
-};
+}
 
 
 /* Main Routes */
@@ -29,13 +25,12 @@ function getRating (array) {
 router.get('/', function(req, res, next) {
 
     var options = { method: 'GET',
-        url: 'https://miked-gtables.herokuapp.com/api/restaurants'
-    }
+        url: 'http://localhost:5000/api/restaurants'
+    };
 
 
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
-
       res.render('index', {restaurants: JSON.parse(body), title: 'gTables'});
     });
 });
@@ -52,9 +47,8 @@ router.get('/restaurants/new', function(req, res, next) {
 // Query the API to post the data to the database //
 
 router.post('/restaurants/new', function(req, res, next) {
-    req.body.description = String(req.body.description).replace(replaceApostrophe, "''");
     var options = { method: 'POST',
-      url: 'https://miked-gtables.herokuapp.com/api/restaurants/new',
+      url: 'http://localhost:5000/api/restaurants/new',
       body:
        { name: req.body.name,
          address_city: req.body.location,
@@ -67,7 +61,6 @@ router.post('/restaurants/new', function(req, res, next) {
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
 
-      // redirect back to the index page after creation
       res.redirect('/');
     });
 });
@@ -79,7 +72,7 @@ router.post('/restaurants/new', function(req, res, next) {
 router.get('/restaurants/:id/edit', function(req, res, next) {
     var id = req.params.id;
     var options = { method: 'GET',
-        url: 'https://miked-gtables.herokuapp.com/api/restaurants/'+id
+        url: 'http://localhost:5000/api/restaurants/'+id
     };
 
 
@@ -94,10 +87,9 @@ router.get('/restaurants/:id/edit', function(req, res, next) {
 
 router.post('/restaurants/:id/edit', function(req, res, next) {
     var id = req.params.id;
-    req.body.description = String(req.body.description).replace(replaceApostrophe, "''");
 
     var options = { method: 'PUT',
-      url: 'https://miked-gtables.herokuapp.com/api/restaurants/'+id+'/edit',
+      url: 'http://localhost:5000/api/restaurants/'+id+'/edit',
       body:
         {   name: req.body.name,
             address_city: req.body.location,
@@ -121,7 +113,7 @@ router.post('/restaurants/:id/edit', function(req, res, next) {
 router.get('/restaurants/:id', function(req, res, next) {
     var id = req.params.id;
     var options = { method: 'GET',
-        url: 'https://miked-gtables.herokuapp.com/api/restaurants/'+id
+        url: 'http://localhost:5000/api/restaurants/'+id
     };
 
     // query GET request to API for restaurant information
@@ -129,14 +121,20 @@ router.get('/restaurants/:id', function(req, res, next) {
         if (error) throw new Error(error);
 
         var options = { method: 'GET',
-        url: 'https://miked-gtables.herokuapp.com/api/reviews/'+id};
-
+        url: 'http://localhost:5000/api/reviews/'+id
+      };
+      console.log(options.url);
         // query GET request to API for reviews based on current restaurant ID.
         request(options, function (error, response, bod) {
             if (error) throw new Error(error);
-            var averageRating = getRating(JSON.parse(bod));
+              var averageRating = getRating(JSON.parse(bod));
             // render show page with review and restaurant information.
-            res.render('restaurants/show', {restaurant: JSON.parse(body)[0], reviews: JSON.parse(bod), averageRating: JSON.parse(averageRating)});
+            res.render('restaurants/show', {
+                restaurant: JSON.parse(body)[0],
+                reviews: JSON.parse(bod),
+                averageRating: JSON.parse(averageRating),
+                message: req.flash('message')[0]
+              });
         });
     });
 });
@@ -147,8 +145,8 @@ router.get('/restaurants/:id', function(req, res, next) {
 router.get('/restaurants/:id/delete', function(req, res, next) {
     var id = req.params.id;
     var options = { method: 'DELETE',
-      url: 'https://miked-gtables.herokuapp.com/api/restaurants/'+id+'/delete'
-    }
+      url: 'http://localhost:5000/api/restaurants/'+id+'/delete'
+    };
 
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
@@ -182,7 +180,7 @@ function formatDate(date) {
     if (day.length < 2) day = '0' + day;
 
     return [year, month, day].join('-');
-};
+}
 
 
 // add new review for a specific restaurant by ID. //
@@ -192,7 +190,7 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
     var formattedDate = formatDate(now);
     console.log(formattedDate);
     var options = { method: 'GET',
-        url: 'https://miked-gtables.herokuapp.com/api/restaurants/'+id+'/reviews/new'};
+        url: 'http://localhost:5000/api/restaurants/'+id+'/reviews/new'};
 
     // query the API for the restaurant information that we are creating
     // the review for.
@@ -200,17 +198,16 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
         if (error) throw new Error(error);
 
         // render the new review page with the restaurant information and the formatted Date string
-        res.render('reviews/new', {restaurant: JSON.parse(body)[0], formattedDate});
-    })
+        res.render('reviews/new', {restaurant: JSON.parse(body)[0], date: formattedDate});
+    });
 });
 
 // send new review information to the database when submitting the new review form
 
 router.post('/restaurants/:id/reviews/new', function(req, res, next) {
     var id = req.params.id;
-    req.body.review = String(req.body.review).replace(replaceApostrophe, "''");
     var options = { method: 'POST',
-      url: 'https://miked-gtables.herokuapp.com/api/restaurants/'+id+'/reviews/new',
+      url: 'http://localhost:5000/api/restaurants/'+id+'/reviews/new',
       body:
        { reviewer: req.body.reviewer,
          review_date: req.body.review_date,
@@ -235,11 +232,9 @@ router.post('/restaurants/:id/reviews/new', function(req, res, next) {
 router.post('/restaurants/:id/reviews/:review_id/edit', function(req, res, next) {
     var id = req.params.id;
     var review_id = req.params.review_id;
-    // replace any apostrophe's in the text area that break sql strings
 
-    req.body.review = String(req.body.review).replace(replaceApostrophe, "''");
     var options = { method: 'PUT',
-      url: 'https://miked-gtables.herokuapp.com/api/restaurants/'+id+'/reviews/'+review_id+'/edit',
+      url: 'http://localhost:5000/api/restaurants/'+id+'/reviews/'+review_id+'/edit',
       body:
         {   reviewer: req.body.reviewer,
             review_date: req.body.review_date,
@@ -262,14 +257,14 @@ router.get('/restaurants/:id/reviews/:review_id/edit', function(req, res, next) 
     var id = req.params.id;
     var review_id = req.params.review_id;
     var options = { method: 'GET',
-        url: 'https://miked-gtables.herokuapp.com/api/restaurants/'+id
+        url: 'http://localhost:5000/api/restaurants/'+id
     };
 
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
 
         var options = { method: 'GET',
-        url: 'https://miked-gtables.herokuapp.com/api/review/'+review_id};
+        url: 'http://localhost:5000/api/review/'+review_id};
 
         request(options, function (error, response, bod) {
             if (error) throw new Error(error);
@@ -278,7 +273,7 @@ router.get('/restaurants/:id/reviews/:review_id/edit', function(req, res, next) 
             console.log(JSON.parse(bod));
             var review_date = JSON.parse(bod)[0].review_date.split('T')[0];
             // render the reviews edit page with the restaurant information and the review information.
-            res.render('reviews/edit', {restaurant: JSON.parse(body)[0], review: JSON.parse(bod)[0], review_date: review_date})
+            res.render('reviews/edit', {restaurant: JSON.parse(body)[0], review: JSON.parse(bod)[0], review_date: review_date});
         });
 
     });

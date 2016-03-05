@@ -20,7 +20,13 @@
     </div>
   </div>
 </nav>
+
 <div class="container">
+  {% if message %}
+  <div class="alert alert-{{ message.status }}">
+    {{ message.value }}
+  </div>
+  {% endif %}
   <form class="form-horizontal" method="POST" action="/restaurants/{{ restaurant.id }}/reviews/new">
     <fieldset>
       <legend>New Review</legend>
@@ -33,7 +39,7 @@
       <div class="form-group">
         <label for="review_date" class="col-lg-2 control-label">Date</label>
         <div class="col-lg-3">
-          <input type="date" class="form-control" id="review_date" name="review_date" value="{{ formattedDate }}" required>
+          <input type="date" class="form-control" id="review_date" name="review_date" value="{{ date }}" required>
         </div>
       </div>
       <div class="form-group" required>
@@ -66,4 +72,3 @@
 </div>
 
 {% endblock %}
-
