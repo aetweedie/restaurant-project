@@ -74,7 +74,7 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
 
 
 // insert new review into database for specific restaurant, by ID
-router.post('/restaurants/:id/reviews/new', function(req, res, next) {
+router.post('/restaurants/:id/reviews/new', helpers.validReviewer, function(req, res, next) {
     var id = req.params.id;
       rev_queries.insertReview(id, req.body).then(function() {
         res.send('success');

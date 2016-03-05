@@ -12,13 +12,13 @@ function validReviewer (req, res, next) {
     });
   }).then(function(data) {
     console.log('data: ', data);
-    if (data.length) {
-      req.flash('message', {
-      status: 'danger', value: 'Reviewer already exists.  Please try a different Restaurant.'
-    });
+    if (!data.length) {
       return next();
     } else {
-      return next();
+      req.flash('message', {
+        status: 'danger', value: 'Reviewer already exists.  Please try a different Restaurant.'
+      });
+      res.redirect('/restaurants/'+req.params.id);
     }
   });
 }
