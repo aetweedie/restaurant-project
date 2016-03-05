@@ -77,7 +77,7 @@ router.post('/restaurants/:id/reviews/new', helpers.validReviewer, function(req,
   console.log(req.flash());
     var id = req.params.id;
       rev_queries.insertReview(id, req.body).then(function() {
-        res.send('success');
+        res.end();
       });
 });
 
