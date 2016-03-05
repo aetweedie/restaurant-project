@@ -112,6 +112,7 @@ router.post('/restaurants/:id/edit', function(req, res, next) {
 
 router.get('/restaurants/:id', function(req, res, next) {
     var id = req.params.id;
+    console.log(req.flash());
     var options = { method: 'GET',
         url: 'http://localhost:5000/api/restaurants/'+id
     };
@@ -123,7 +124,6 @@ router.get('/restaurants/:id', function(req, res, next) {
         var options = { method: 'GET',
         url: 'http://localhost:5000/api/reviews/'+id
       };
-      console.log(options.url);
         // query GET request to API for reviews based on current restaurant ID.
         request(options, function (error, response, bod) {
             if (error) throw new Error(error);
@@ -133,7 +133,7 @@ router.get('/restaurants/:id', function(req, res, next) {
                 restaurant: JSON.parse(body)[0],
                 reviews: JSON.parse(bod),
                 averageRating: JSON.parse(averageRating),
-                message: req.flash('message')[0]
+                message: req.flash('message')
               });
         });
     });

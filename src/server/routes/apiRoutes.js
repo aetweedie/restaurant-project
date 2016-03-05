@@ -50,7 +50,6 @@ router.delete('/restaurants/:id/delete', function(req, res, next) {
 router.get('/reviews/:id?', function(req, res, next) {
     var id = req.params.id;
       rev_queries.getReviewsByResId(id).then(function(data) {
-        console.log(data);
         res.json(data);
       });
     });
@@ -75,6 +74,7 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
 
 // insert new review into database for specific restaurant, by ID
 router.post('/restaurants/:id/reviews/new', helpers.validReviewer, function(req, res, next) {
+  console.log(req.flash());
     var id = req.params.id;
       rev_queries.insertReview(id, req.body).then(function() {
         res.send('success');
