@@ -35,7 +35,6 @@ router.get('/', function(req, res, next) {
 
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
-      console.log(body);
       res.render('index', {restaurants: JSON.parse(body), title: 'gTables'});
     });
 });
@@ -52,7 +51,6 @@ router.get('/restaurants/new', function(req, res, next) {
 // Query the API to post the data to the database //
 
 router.post('/restaurants/new', function(req, res, next) {
-    req.body.description = String(req.body.description).replace(replaceApostrophe, "''");
     var options = { method: 'POST',
       url: 'http://localhost:5000/api/restaurants/new',
       body:
@@ -67,7 +65,6 @@ router.post('/restaurants/new', function(req, res, next) {
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
 
-      // redirect back to the index page after creation
       res.redirect('/');
     });
 });

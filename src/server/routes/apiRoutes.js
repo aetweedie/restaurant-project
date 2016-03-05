@@ -21,98 +21,29 @@ router.get('/restaurants/:id?', function(req, res, next) {
         res.json(data);
       });
     }
-
-    // pg.connect(connectionString, function(err, client, done) {
-    //     var newArr = [];
-    //     if (err) {
-    //         res.status(500)
-    //             .json({
-    //                 status: 'Error',
-    //                 message: 'Something bad happened'
-    //             });
-    //         done();
-    //     }
-    //     if (id) {
-    //       // getAllRestaurants();
-    //         var query = client.query('SELECT * FROM restaurants WHERE id = '+id);
-    //     } else {
-    //       // getRestaurantAndRating();
-    //         var query = client.query('SELECT restaurants.name, image_url, address_city, address_state, COALESCE(CAST(ROUND(AVG(reviews.rating)) AS INT), 0) AS rating, description, restaurants.id, cuisine FROM restaurants LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id GROUP BY restaurants.name, image_url, address_city, address_state, description, restaurants.id');
-    //     }
-    //
-    //     query.on('row', function(row) {
-    //         newArr.push(row);
-    //     });
-    //     query.on('end', function() {
-    //         done();
-    //         if (newArr.length > 0) {
-    //             res.json(newArr);
-    //         } else {
-    //             res.status(500).json({status: 'Error', message: 'Restaurants Empty.'})
-    //         }
-    //         pg.end();
-    //     });
-    // });
 });
 
 // send a new restaurant into the database
 router.post('/restaurants/new', function(req, res, next) {
-    var newRestaurant = req.body;
-    pg.connect(connectionString, function(err, client, done) {
-        if (err) {
-            res.status(500).json({status: 'Error', message: 'Couldn\'t retrieve restaurants'});
-            done();
-        }
-
-        // insertRestaurant();
-        var query = client.query("INSERT INTO restaurants (name, address_city, address_state, cuisine, image_url, description) VALUES ('"+newRestaurant.name+"', '"+newRestaurant.address_city+"', '"+newRestaurant.address_state+"', '"+newRestaurant.cuisine+"',  '"+newRestaurant.image_url+"', '"+newRestaurant.description+"')");
-
-        query.on('end', function() {
-            done();
-            res.json({message: 'Restaurant inserted successfully!'});
-            pg.end();
-        });
+    res_queries.insertRestaurant(req.body).then(function() {
+      res.send('Success');
     });
 });
 
 
 // edit an existing restaurant, by ID.
 router.put('/restaurants/:id/edit', function(req, res, next) {
-    var editRestaurant = req.body;
-    console.log('form info:', editRestaurant);
     var id = req.params.id;
-    pg.connect(connectionString, function(err, client, done) {
-        if (err) {
-            res.status(500).json({status: 'Error', message: 'Couldn\'t retrieve restaurants'});
-            done();
-        }
-        // editRestaurantById();
-        var query = client.query("UPDATE restaurants SET name = '"+editRestaurant.name+"', address_city = '"+editRestaurant.address_city+"', address_state = '"+editRestaurant.address_state+"', cuisine = '"+editRestaurant.cuisine+"', image_url = '"+editRestaurant.image_url+"', description = '"+editRestaurant.description+"' WHERE id = "+id);
-        query.on('end', function() {
-            done();
-            res.json({message: 'Restaurant Updated successfully!'});
-            pg.end();
-        });
+    res_queries.editRestaurantById(id, req.body).then(function() {
+      res.send('Success');
     });
 });
 
 // delete a specific restaurant, by ID
 router.delete('/restaurants/:id/delete', function(req, res, next) {
     var id = req.params.id;
-    pg.connect(connectionString, function(err, client, done) {
-        if (err) {
-            res.status(500).json({status: 'Error', message: 'Couldn\'t retrieve restaurants'});
-            done();
-        }
-
-        // deleteRestaurantById();
-        var query = client.query('DELETE FROM restaurants WHERE id = '+id);
-
-        query.on('end', function() {
-            done();
-            res.json({message: 'Restaurant deleted successfully!'});
-            pg.end();
-        });
+    res_queries.deleteRestaurantById(id).then(function() {
+      res.send('Success');
     });
 });
 
