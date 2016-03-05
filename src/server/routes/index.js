@@ -4,9 +4,6 @@ var router      = express.Router();
 var request     = require('request');
 
 
-
-var replaceApostrophe = /'/g;
-
 function getRating (array) {
     var rating = array;
     var totalRating = 0;
@@ -91,7 +88,6 @@ router.get('/restaurants/:id/edit', function(req, res, next) {
 
 router.post('/restaurants/:id/edit', function(req, res, next) {
     var id = req.params.id;
-    req.body.description = String(req.body.description).replace(replaceApostrophe, "''");
 
     var options = { method: 'PUT',
       url: 'http://localhost:5000/api/restaurants/'+id+'/edit',
@@ -126,12 +122,13 @@ router.get('/restaurants/:id', function(req, res, next) {
         if (error) throw new Error(error);
 
         var options = { method: 'GET',
-        url: 'http://localhost:5000/api/reviews/'+id};
-
+        url: 'http://localhost:5000/api/reviews/'+id
+      };
+      console.log(options.url);
         // query GET request to API for reviews based on current restaurant ID.
         request(options, function (error, response, bod) {
             if (error) throw new Error(error);
-            var averageRating = getRating(JSON.parse(bod));
+              var averageRating = getRating(JSON.parse(bod));
             // render show page with review and restaurant information.
             res.render('restaurants/show', {restaurant: JSON.parse(body)[0], reviews: JSON.parse(bod), averageRating: JSON.parse(averageRating)});
         });
@@ -197,7 +194,7 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
         if (error) throw new Error(error);
 
         // render the new review page with the restaurant information and the formatted Date string
-        res.render('reviews/new', {restaurant: JSON.parse(body)[0], formattedDate});
+        res.render('reviews/new', {restaurant: JSON.parse(body)[0], date: formattedDate});
     });
 });
 
@@ -205,7 +202,6 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
 
 router.post('/restaurants/:id/reviews/new', function(req, res, next) {
     var id = req.params.id;
-    req.body.review = String(req.body.review).replace(replaceApostrophe, "''");
     var options = { method: 'POST',
       url: 'http://localhost:5000/api/restaurants/'+id+'/reviews/new',
       body:
@@ -232,9 +228,7 @@ router.post('/restaurants/:id/reviews/new', function(req, res, next) {
 router.post('/restaurants/:id/reviews/:review_id/edit', function(req, res, next) {
     var id = req.params.id;
     var review_id = req.params.review_id;
-    // replace any apostrophe's in the text area that break sql strings
 
-    req.body.review = String(req.body.review).replace(replaceApostrophe, "''");
     var options = { method: 'PUT',
       url: 'http://localhost:5000/api/restaurants/'+id+'/reviews/'+review_id+'/edit',
       body:
