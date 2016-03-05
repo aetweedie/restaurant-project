@@ -30,7 +30,7 @@ module.exports = {
       rating: body.rating,
       review: body.review,
       restaurant_id: res_id
-    }).then(function(data) {
+    }, 'id').then(function(data) {
       return data;
     });
   },

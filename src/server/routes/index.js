@@ -1,5 +1,4 @@
 var express     = require('express');
-var restaurant  = require('./utility');
 var router      = express.Router();
 var request     = require('request');
 
@@ -130,7 +129,12 @@ router.get('/restaurants/:id', function(req, res, next) {
             if (error) throw new Error(error);
               var averageRating = getRating(JSON.parse(bod));
             // render show page with review and restaurant information.
-            res.render('restaurants/show', {restaurant: JSON.parse(body)[0], reviews: JSON.parse(bod), averageRating: JSON.parse(averageRating)});
+            res.render('restaurants/show', {
+                restaurant: JSON.parse(body)[0],
+                reviews: JSON.parse(bod),
+                averageRating: JSON.parse(averageRating),
+                message: req.flash('message')[0]
+              });
         });
     });
 });

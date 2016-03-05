@@ -4,6 +4,7 @@ var router      = express.Router();
 var pg          = require('pg');
 var res_queries = require('../restaurant_queries');
 var rev_queries = require('../review_queries');
+var helpers      = require('./utility');
 
 // connect to env.DATABASE_URL or localhost
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/gtables';
@@ -75,9 +76,9 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
 // insert new review into database for specific restaurant, by ID
 router.post('/restaurants/:id/reviews/new', function(req, res, next) {
     var id = req.params.id;
-    rev_queries.insertReview(id, req.body).then(function() {
-      res.send('success');
-    });
+      rev_queries.insertReview(id, req.body).then(function() {
+        res.send('success');
+      });
 });
 
 
