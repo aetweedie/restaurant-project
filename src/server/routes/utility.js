@@ -25,11 +25,31 @@ function validReviewer (req, res, next) {
   });
 }
 
+function validRestaurant (req, res, next) {
+  var res_name = req.body.name;
+  res_queries.getRestaurantAndRating().then(function(data) {
+    var newData = data.filter(function(restaurant) {
+      return restaurant.name.toLowerCase() === res_name.toLowerCase();
+    });
+    if(!newData.length) {
+      req.flash('message', {
+        status: 'success', value: 'Restaurant added successfully.'
+      });
+      next();
+    } else {
+      req.flash('message', {
+        status: 'danger', value: 'Restaurant already exists.  Please try again.'
+      });
+      res.redirect('/restaurants/new');
+    }
+  });
+}
 
 
 
 
 
 module.exports = {
-  validReviewer: validReviewer
+  validReviewer: validReviewer,
+  validRestaurant: validRestaurant
 };

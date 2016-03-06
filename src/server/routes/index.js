@@ -41,12 +41,14 @@ router.get('/', function(req, res, next) {
 // Render the new Restaurant page //
 
 router.get('/restaurants/new', function(req, res, next) {
-    res.render('restaurants/new', {title: 'New Restaurant'});
+  var flash = req.flash('message')[0];
+  console.log(flash);
+    res.render('restaurants/new', {title: 'New Restaurant', message: flash});
 });
 
 // Query the API to post the data to the database //
 
-router.post('/restaurants/new', function(req, res, next) {
+router.post('/restaurants/new', helpers.validRestaurant, function(req, res, next) {
     var options = { method: 'POST',
       url: 'http://localhost:5000/api/restaurants/new',
       body:
