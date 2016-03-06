@@ -23,7 +23,7 @@ function getRating (array) {
 
 // send a GET request to the restaurants route to populate the index page.
 router.get('/', function(req, res, next) {
-
+    var flash = req.flash('message')[0];
     var options = { method: 'GET',
         url: 'http://localhost:5000/api/restaurants'
     };
@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
 
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
-      res.render('index', {restaurants: JSON.parse(body), title: 'gTables'});
+      res.render('index', {restaurants: JSON.parse(body), title: 'gTables', message: flash});
     });
 });
 

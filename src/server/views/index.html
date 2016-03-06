@@ -24,6 +24,11 @@
   </div>
 </nav>
 <div class="container">
+  {% if message %}
+    <div class="alert alert-{{ message.status }}">
+      {{ message.value }}
+    </div>
+  {% endif %}
     {% for restaurant in restaurants %}
     <div class="col-lg-4">
         <a href="/restaurants/{{ restaurant.id }}" class="non-styled">

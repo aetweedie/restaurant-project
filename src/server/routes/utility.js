@@ -40,7 +40,8 @@ function validRestaurant (req, res, next) {
       req.flash('message', {
         status: 'danger', value: 'Restaurant already exists.  Please try again.'
       });
-      res.redirect('/restaurants/new');
+      console.log(req.body);
+      res.render('../views/restaurants/new', {title: 'New Restaurant', message: req.flash('message')[0], restaurant: req.body});
     }
   });
 }

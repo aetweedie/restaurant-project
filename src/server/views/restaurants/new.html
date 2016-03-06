@@ -45,7 +45,12 @@
             <label for="state" class="col-lg-2 control-label">State</label>
             <div class="col-lg-2">
                 <select class="form-control" id="state" name="state" required>
+                  {% if restaurant %}
+                  <option value="{{ restaurant.state }}" selected>{{ restaurant.state }}</option>
+                  <option value="" disabled>-- State --</option>
+                  {% else %}
                     <option value="" disabled selected>-- State --</option>
+                  {% endif %}
                     <option value="AK">AK</option>
                     <option value="AL">AL</option>
                     <option value="AR">AR</option>
@@ -105,7 +110,12 @@
             <label for="cuisine" class="col-lg-2 control-label">Cuisine</label>
             <div class="col-lg-2">
                 <select class="form-control" id="cuisine" name="cuisine" required>
+                  {% if restaurant %}
+                    <option value="{{ restaurant.cuisine }}" selected>{{ restaurant.cuisine }}</option>
+                    <option value="" disabled>-- Cuisine --</option>
+                  {% else %}
                     <option value="" disabled selected>-- Cuisine --</option>
+                  {% endif %}
                     <option value="American">American</option>
                     <option value="Italian">Italian</option>
                     <option value="Mexican">Mexican</option>
@@ -117,12 +127,12 @@
         <div class="form-group">
           <label for="imageUrl" class="col-lg-2 control-label">Image Url</label>
           <div class="col-lg-3">
-            <input type="text" class="form-control" id="imageUrl" name="image_url" placeholder="Image Url" required>
+            <input type="text" class="form-control" id="imageUrl" name="image_url" placeholder="Image Url" value="{{ restaurant.image_url }}" required>
           </div>
         </div>
         <div class="form-group">
           <div class="col-lg-3 col-lg-offset-2">
-            <textarea class="form-control" rows="3" id="textArea" name="description" placeholder="Short bio" required></textarea>
+            <textarea class="form-control" rows="3" id="textArea" name="description" placeholder="Short bio" required>{% if restaurant %}{{ restaurant.description }}{% endif %}</textarea>
           </div>
         </div>
         <div class="form-group">
