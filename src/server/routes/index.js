@@ -25,7 +25,7 @@ function getRating (array) {
 router.get('/', function(req, res, next) {
     var flash = req.flash('message')[0];
     var options = { method: 'GET',
-        url: 'http://localhost:5000/api/restaurants'
+        url: 'http://miked-gtables.herokuapp.com/api/restaurants'
     };
 
 
@@ -50,7 +50,7 @@ router.get('/restaurants/new', function(req, res, next) {
 
 router.post('/restaurants/new', helpers.validRestaurant, function(req, res, next) {
     var options = { method: 'POST',
-      url: 'http://localhost:5000/api/restaurants/new',
+      url: 'http://miked-gtables.herokuapp.com/api/restaurants/new',
       body:
        { name: req.body.name,
          address_city: req.body.location,
@@ -74,7 +74,7 @@ router.post('/restaurants/new', helpers.validRestaurant, function(req, res, next
 router.get('/restaurants/:id/edit', function(req, res, next) {
     var id = req.params.id;
     var options = { method: 'GET',
-        url: 'http://localhost:5000/api/restaurants/'+id
+        url: 'http://miked-gtables.herokuapp.com/api/restaurants/'+id
     };
 
 
@@ -91,7 +91,7 @@ router.post('/restaurants/:id/edit', function(req, res, next) {
     var id = req.params.id;
 
     var options = { method: 'PUT',
-      url: 'http://localhost:5000/api/restaurants/'+id+'/edit',
+      url: 'http://miked-gtables.herokuapp.com/api/restaurants/'+id+'/edit',
       body:
         {   name: req.body.name,
             address_city: req.body.location,
@@ -117,7 +117,7 @@ router.get('/restaurants/:id', function(req, res, next) {
     var flash = req.flash('message')[0];
     console.log(req.flash('message')[0]);
     var options = { method: 'GET',
-        url: 'http://localhost:5000/api/restaurants/'+id
+        url: 'http://miked-gtables.herokuapp.com/api/restaurants/'+id
     };
 
     // query GET request to API for restaurant information
@@ -125,7 +125,7 @@ router.get('/restaurants/:id', function(req, res, next) {
         if (error) throw new Error(error);
         console.log(flash);
         var options = { method: 'GET',
-        url: 'http://localhost:5000/api/reviews/'+id
+        url: 'http://miked-gtables.herokuapp.com/api/reviews/'+id
       };
         // query GET request to API for reviews based on current restaurant ID.
         request(options, function (error, response, bod) {
@@ -149,7 +149,7 @@ router.get('/restaurants/:id', function(req, res, next) {
 router.get('/restaurants/:id/delete', function(req, res, next) {
     var id = req.params.id;
     var options = { method: 'DELETE',
-      url: 'http://localhost:5000/api/restaurants/'+id+'/delete'
+      url: 'http://miked-gtables.herokuapp.com/api/restaurants/'+id+'/delete'
     };
 
     request(options, function (error, response, body) {
@@ -194,7 +194,7 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
     var formattedDate = formatDate(now);
     console.log(formattedDate);
     var options = { method: 'GET',
-        url: 'http://localhost:5000/api/restaurants/'+id+'/reviews/new'};
+        url: 'http://miked-gtables.herokuapp.com/api/restaurants/'+id+'/reviews/new'};
 
     // query the API for the restaurant information that we are creating
     // the review for.
@@ -211,7 +211,7 @@ router.get('/restaurants/:id/reviews/new', function(req, res, next) {
 router.post('/restaurants/:id/reviews/new', helpers.validReviewer, function(req, res, next) {
     var id = req.params.id;
     var options = { method: 'POST',
-      url: 'http://localhost:5000/api/restaurants/'+id+'/reviews/new',
+      url: 'http://miked-gtables.herokuapp.com/api/restaurants/'+id+'/reviews/new',
       body:
        { reviewer: req.body.reviewer,
          review_date: req.body.review_date,
@@ -238,7 +238,7 @@ router.post('/restaurants/:id/reviews/:review_id/edit', function(req, res, next)
     var review_id = req.params.review_id;
 
     var options = { method: 'PUT',
-      url: 'http://localhost:5000/api/restaurants/'+id+'/reviews/'+review_id+'/edit',
+      url: 'http://miked-gtables.herokuapp.com/api/restaurants/'+id+'/reviews/'+review_id+'/edit',
       body:
         {   reviewer: req.body.reviewer,
             review_date: req.body.review_date,
@@ -261,14 +261,14 @@ router.get('/restaurants/:id/reviews/:review_id/edit', function(req, res, next) 
     var id = req.params.id;
     var review_id = req.params.review_id;
     var options = { method: 'GET',
-        url: 'http://localhost:5000/api/restaurants/'+id
+        url: 'http://miked-gtables.herokuapp.com/api/restaurants/'+id
     };
 
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
 
         var options = { method: 'GET',
-        url: 'http://localhost:5000/api/review/'+review_id};
+        url: 'http://miked-gtables.herokuapp.com/api/review/'+review_id};
 
         request(options, function (error, response, bod) {
             if (error) throw new Error(error);
