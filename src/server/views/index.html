@@ -16,7 +16,11 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
         <div class="middle"><h1 class="heading">{{ title }}</h1></div>
       <ul class="nav navbar-nav navbar-right right-side">
+        {% if user %}
         <li><a href="/restaurants/new">New Restaurant</a></li>
+        {% else %}
+        <li><a href="/auth/signup">Sign Up</a></li>
+        {% endif %}
       </ul>
     </div>
   </div>
