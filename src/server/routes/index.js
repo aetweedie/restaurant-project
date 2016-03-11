@@ -320,10 +320,6 @@ if (process.env.NODE_ENV === "development") {
       }
     }
   });
-} else if (process.env.NODE_ENV === "development"){
-  router.get('/status', function(req, res, next) {
-    res.redirect('/');
-  });
 }
 
 
