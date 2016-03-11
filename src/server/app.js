@@ -68,7 +68,7 @@ passport.use(new FacebookStrategy({
     profileFields: ['name', 'displayName']
   },
   function(accessToken, refreshToken, profile, done) {
-      
+
       Users().where('facebook_id', profile.id).then(function(data) {
     if (data.length) {
       return data[0].id;
@@ -83,8 +83,6 @@ passport.use(new FacebookStrategy({
     }
   }).then(function(user) {
       return done(null, user);
-  }).catch(function(err) {
-    
   });
   }
 ));
