@@ -1,5 +1,6 @@
 // add scripts
 
+
 $(document).on('ready', function() {
     var truncated = $('.truncate');
     var truncateLength = 80;
@@ -18,5 +19,18 @@ $(document).on('ready', function() {
         });
 
         $('[data-toggle="tooltip"]').tooltip();
+    });
+
+});
+
+$(document).on('click', '#delete', function(event) {
+    event.preventDefault();
+    bootbox.confirm('Are you sure you want to delete this restaurant?', function(val) {
+        if (val) {
+          var href = $('#delete').attr('href');
+          $.ajax({url: href}).done(function(result) {
+            window.location.replace('/');
+          });
+        }
     });
 });
