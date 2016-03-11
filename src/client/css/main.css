@@ -6,6 +6,11 @@ a {
   color: #00B7FF;
 }
 
+.form-control .non-text {
+  color: #888888;
+  background-color: black;
+}
+
 .heading {
     text-align: center;
 }
