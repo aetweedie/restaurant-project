@@ -3,6 +3,11 @@ var router        = express.Router();
 var request       = require('request');
 var helpers       = require('./utility');
 var auth_helpers  = require('../lib/helpers');
+var knex          = require('../../../db/knex');
+
+function Users() {
+  return knex('users');
+}
 
 
 function getRating (array) {
@@ -27,7 +32,7 @@ function getRating (array) {
 router.get('/', function(req, res, next) {
     var flash = req.flash('message')[0];
     var user = req.user || '';
-    console.log(user);
+
     var options = { method: 'GET',
         url: process.env.HOST + '/api/restaurants'
     };
@@ -46,7 +51,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/restaurants/new', auth_helpers.ensureAdmin, function(req, res, next) {
   var flash = req.flash('message')[0];
-  console.log(flash);
+
     res.render('restaurants/new', {title: 'New Restaurant', message: flash});
 });
 
@@ -126,17 +131,17 @@ router.get('/restaurants/:id', function(req, res, next) {
     // query GET request to API for restaurant information
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
-        console.log(flash);
+
         var options = { method: 'GET',
         url: process.env.HOST + '/api/reviews/'+id
       };
         // query GET request to API for reviews based on current restaurant ID.
         request(options, function (error, response, bod) {
-          console.log(flash);
+
             if (error) throw new Error(error);
               var averageRating = getRating(JSON.parse(bod));
             // render show page with review and restaurant information.
-            console.log(bod);
+
             res.render('restaurants/show', {
                 restaurant: JSON.parse(body)[0],
                 reviews: JSON.parse(bod),
@@ -197,9 +202,9 @@ router.get('/restaurants/:id/reviews/new', auth_helpers.ensureAuthenticated, fun
     var id = req.params.id;
     var now = new Date();
     var formattedDate = formatDate(now);
-    console.log(formattedDate);
+
     var user = req.user[0] || '';
-    console.log(user);
+
     var options = { method: 'GET',
         url: process.env.HOST + '/api/restaurants/'+id+'/reviews/new'};
 
@@ -227,7 +232,7 @@ router.post('/restaurants/:id/reviews/new', helpers.validReviewer, auth_helpers.
          restaurant_id: id,
          user: req.user[0]
       }, json: true };
-      console.log(req.body);
+
 
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
@@ -269,7 +274,7 @@ router.post('/restaurants/:id/reviews/:review_id/edit', auth_helpers.ensureAuthe
 router.get('/restaurants/:id/reviews/:review_id/edit', auth_helpers.ensureAuthenticated, function(req, res, next) {
     var id = req.params.id;
     var user = req.user[0] || '';
-    console.log('User: ', user);
+
     var review_id = req.params.review_id;
     var options = { method: 'GET',
         url: process.env.HOST + '/api/restaurants/'+id
@@ -285,7 +290,7 @@ router.get('/restaurants/:id/reviews/:review_id/edit', auth_helpers.ensureAuthen
             if (error) throw new Error(error);
 
             // format the review_date to take off time entries.
-            console.log(JSON.parse(bod));
+
             var review_date = JSON.parse(bod)[0].review_date.split('T')[0];
             // render the reviews edit page with the restaurant information and the review information.
             res.render('reviews/edit', {restaurant: JSON.parse(body)[0], user: user, review: JSON.parse(bod)[0], review_date: review_date});
@@ -294,6 +299,29 @@ router.get('/restaurants/:id/reviews/:review_id/edit', auth_helpers.ensureAuthen
     });
 });
 
+
+if (process.env.NODE_ENV === "development") {
+  router.get('/status', function(req, res, next) {
+    if(!req.user) {
+      res.send('Not authenticated');
+    } else {
+      console.log('Before: ', req.user[0]);
+      if (req.user[0].is_admin) {
+        Users().where('id', req.user[0].id).update({
+          is_admin: false
+        }, 'id').then(function(data) {
+          res.redirect('/');
+        });
+      } else {
+        Users().where('id', req.user[0].id).update({
+          is_admin: true
+        }, 'id').then(function(data) {
+          res.redirect('/');
+        });
+      }
+    }
+  });
+}
 
 
 module.exports = router;

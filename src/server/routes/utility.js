@@ -5,13 +5,13 @@ var rev_queries = require('../review_queries');
 
 function validReviewer (req, res, next) {
   var reviewer = req.body.reviewer;
-  console.log(req.body);
+
   rev_queries.getReviewsByResId(req.params.id).then(function(data) {
     return data.filter(function(review) {
       return review.reviewer.toLowerCase() === reviewer.toLowerCase();
     });
   }).then(function(data) {
-    console.log('data: ', data);
+
     if (!data.length) {
       req.flash('message', {
         status: 'success', value: 'Thanks for your review.'
@@ -41,7 +41,7 @@ function validRestaurant (req, res, next) {
       req.flash('message', {
         status: 'danger', value: 'Restaurant already exists.  Please try again.'
       });
-      console.log(req.body);
+      
       res.render('../views/restaurants/new', {title: 'New Restaurant', message: req.flash('message')[0], restaurant: req.body});
     }
   });
