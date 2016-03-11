@@ -305,7 +305,6 @@ if (process.env.NODE_ENV === "development") {
     if(!req.user) {
       res.send('Not authenticated');
     } else {
-      console.log('Before: ', req.user[0]);
       if (req.user[0].is_admin) {
         Users().where('id', req.user[0].id).update({
           is_admin: false
@@ -320,6 +319,10 @@ if (process.env.NODE_ENV === "development") {
         });
       }
     }
+  });
+} else if (process.env.NODE_ENV === "development"){
+  router.get('/status', function(req, res, next) {
+    res.redirect('/');
   });
 }
 
