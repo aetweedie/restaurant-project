@@ -29,9 +29,13 @@ module.exports = {
       review_date: body.review_date,
       rating: body.rating,
       review: body.review,
-      restaurant_id: res_id
+      restaurant_id: res_id,
+      user_id: body.user.id
     }, 'id').then(function(data) {
       return data;
+    }).catch(function(err) {
+      console.log(err);
+      return err;
     });
   },
   editReview: function(res_id, id, body) {

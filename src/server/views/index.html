@@ -17,9 +17,12 @@
         <div class="middle"><h1 class="heading">{{ title }}</h1></div>
       <ul class="nav navbar-nav navbar-right right-side">
         {% if user %}
+          {% if user.is_admin %}
         <li><a href="/restaurants/new">New Restaurant</a></li>
+          {% endif %}
+        <li><a href="/auth/logout">Log Out</a></li>
         {% else %}
-        <li><a href="/auth/facebook">Sign Up</a></li>
+        <li><a href="/auth/facebook">Sign Up/Sign In</a></li>
         {% endif %}
       </ul>
     </div>

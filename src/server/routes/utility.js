@@ -5,6 +5,7 @@ var rev_queries = require('../review_queries');
 
 function validReviewer (req, res, next) {
   var reviewer = req.body.reviewer;
+  console.log(req.body);
   rev_queries.getReviewsByResId(req.params.id).then(function(data) {
     return data.filter(function(review) {
       return review.reviewer.toLowerCase() === reviewer.toLowerCase();

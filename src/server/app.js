@@ -9,7 +9,9 @@ var swig          = require('swig');
 var flash         = require('connect-flash');
 var session       = require('express-session');
 var cookieSession = require('cookie-session');
-var passport = require('passport');
+var passport      = require('passport');
+
+
 require('dotenv').load();
 var FacebookStrategy = require('passport-facebook').Strategy;
 if ( !process.env.NODE_ENV ) { require('dotenv').config(); }
@@ -45,14 +47,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
-  secret: process.env.SECRET_KEY || 'change_me',
+  secret: 'secret kitten',
   resave: false,
   saveUninitialized: true
 }));
-app.use(cookieSession({
-  name: 'facebook-oauth',
-  keys: [process.env.COOKIE_KEY1, process.env.COOKIE_KEY2]
-}));
+// app.use(cookieSession({
+//   name: 'facebook-oauth',
+//   keys: [process.env.COOKIE_KEY1, process.env.COOKIE_KEY2]
+// }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -62,19 +64,39 @@ app.use(express.static(path.join(__dirname, '../client')));
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback"
+    callbackURL: process.env.HOST + "/auth/facebook/callback",
+    profileFields: ['name', 'displayName']
   },
-  function(accessToken, refreshToken, profile, cb) {
-      return cb(err, profile);
+  function(accessToken, refreshToken, profile, done) {
+      console.log(profile);
+      Users().where('facebook_id', profile.id).then(function(data) {
+    if (data.length) {
+      return data[0].id;
+    } else {
+      return Users().insert({
+        facebook_id: profile.id,
+        first_name: profile.name.givenName,
+        last_name: profile.name.familyName
+      },'id').then(function(id) {
+        return id[0];
+      });
+    }
+  }).then(function(user) {
+      return done(null, user);
+  }).catch(function(err) {
+    console.log(err);
+  });
   }
 ));
 
-passport.serializeUser(function(user, cb) {
-  cb(null, user);
+passport.serializeUser(function(user, done) {
+  done(null, user);
 });
 
-passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
+passport.deserializeUser(function(user, done) {
+  Users().where('id', user).then(function(data) {
+    done(null, data);
+  });
 });
 
 

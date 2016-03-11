@@ -42,7 +42,7 @@
             {% endif %}
             <p>Rating: {% if ratingArray %}{% for number in ratingArray %} <img class="rating" src="../images/full.svg.png"> {% endfor %} {% else %}No reviews yet.  Add one below!{% endif %}</p>
             {% if user %}
-              {% if user.admin %}
+              {% if user.is_admin %}
                 <a href="/restaurants/{{ restaurant.id }}/edit" class="btn btn-primary">Edit</a>
                 <a href="/restaurants/{{ restaurant.id }}/delete" class="btn btn-danger">Delete</a>
               {% endif %}
@@ -60,7 +60,13 @@
                         <div class="block-inline">
                                 <div class="wrapper"><span class="reviewBody truncate non-styled">{{ review.review }}</span></div>
                           <h4 class="dark">{% set ratingArray = Array(review.rating) %}{% for number in ratingArray %} <img class="rating" src="../images/full.svg.png" height="30px" width="30px"> {% endfor %}
+
+                      {% if user %}
+
+                        {% if user.id === review.user_id %}
                           <span class="pull-right"><a href="/restaurants/{{ restaurant.id }}/reviews/{{ review.id }}/edit" class="btn btn-warning">Edit</a></span>
+                        {% endif %}
+                      {% endif %}
                           </h4>
                         </div>
                     </div>
