@@ -116,9 +116,19 @@
             </div>
         </div>
         <div class="form-group">
-          <label for="imageUrl" class="col-lg-2 control-label">Image Url</label>
-          <div class="col-lg-3">
-            <input type="text" class="form-control" id="imageUrl" placeholder="Image Url" name="image_url" value="{{ restaurant.image_url }}" required>
+          <label for="image_url" class="col-lg-2 control-label">Image URL</label>
+          <div class="col-lg-2">
+              <select class="form-control" id="image_url" name="image_url" required>
+              {% if restaurant.image_url %}
+                      <option value="{{ restaurant.image_url }}" selected>{{ restaurant.image_url }}</option>
+                  {% endif %}
+                  <option value="" disabled>-- Image Type --</option>
+                  <option value="../images/burger.png">../images/burger.png</option>
+                  <option value="../images/italian.png">../images/italian.png</option>
+                  <option value="../images/mexican.png">../images/mexican.png</option>
+                  <option value="../images/thai.jpg">../images/thai.jpg</option>
+                  <option value="../images/pho.jpg">../images/pho.jpg</option>
+              </select>
           </div>
         </div>
         <div class="form-group">

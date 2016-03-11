@@ -29,7 +29,7 @@
   {% endif %}
     <div class="row">
         <div class="col-lg-4">
-            <img src="../images/{{ restaurant.image_url }}" alt="{{ restaurant.image_url }}" height="400px" width="400px">
+            <img src="{{ restaurant.image_url }}" alt="{{ restaurant.image_url }}" height="400px" width="400px">
         </div>
         <div class="col-lg-5 col-lg-offset-2">
             <h4>{{ restaurant.cuisine }} cuisine</h4>
@@ -44,7 +44,7 @@
             {% if user %}
               {% if user.is_admin %}
                 <a href="/restaurants/{{ restaurant.id }}/edit" class="btn btn-primary">Edit</a>
-                <a href="/restaurants/{{ restaurant.id }}/delete" class="btn btn-danger">Delete</a>
+                <a href="/restaurants/{{ restaurant.id }}/delete" class="btn btn-danger" id="delete">Delete</a>
               {% endif %}
               <a href="/restaurants/{{ restaurant.id }}/reviews/new" class="btn btn-info">Add Review</a>
             {% endif %}
